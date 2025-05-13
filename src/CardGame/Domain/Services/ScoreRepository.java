@@ -1,4 +1,6 @@
 package CardGame.Domain.Services;
 
-public class ScoreRepository {
+public interface ScoreRepository {
+    void saveScore(int score);
+    int loadHighScore();
 }
