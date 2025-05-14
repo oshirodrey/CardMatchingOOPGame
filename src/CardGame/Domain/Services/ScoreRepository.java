@@ -1,6 +1,8 @@
 package CardGame.Domain.Services;
 
+import CardGame.Domain.Entities.Score;
+
 public interface ScoreRepository {
-    void saveScore(int score);
+    void saveScore(Score score);
     int loadHighScore();
 }

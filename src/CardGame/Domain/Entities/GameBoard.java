@@ -70,8 +70,13 @@ public class GameBoard {
         }
         return true;
     }
+
     public long getElapsedTime() {
         return System.currentTimeMillis() - startTime;
+    }
+
+    public Score getScoreSnapshot() {
+        return new Score(moveCount, getElapsedTime());
     }
 
 
