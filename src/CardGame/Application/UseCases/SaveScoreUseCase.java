@@ -7,7 +7,7 @@ public class SaveScoreUseCase {
     private final ScoreRepository scoreRepository;
     public SaveScoreUseCase(ScoreRepository repo) {
         this.scoreRepository = repo;
-    }
+    } //Dependency injection
     public void execute(Score score) {
         scoreRepository.saveScore(score);
     }
