@@ -10,9 +10,9 @@ public class Card {
         this.cardName = symbol;
     }
     public void flip() {
-        if(isMatched){
+
             isFaceUp= !isFaceUp;
-        }
+
 
     }
     //Getters and setters
@@ -20,5 +20,6 @@ public class Card {
     public boolean isFaceUp() {return isFaceUp;}
     public boolean isMatched() {return isMatched;}
     public void setMatched(boolean isMatched) {this.isMatched = isMatched;}
+
 
 }
