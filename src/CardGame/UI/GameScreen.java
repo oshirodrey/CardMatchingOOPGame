@@ -1,11 +1,12 @@
 package CardGame.UI;
 
+import CardGame.Domain.Entities.GameBoard;
 import CardGame.UI.CustomizedComponents.Screen;
 
 public class GameScreen extends Screen {
-    public GameScreen(int screenWidth, int screenHeight) {
-        super(screenWidth, screenHeight);
-    }
+  //  private GameBoard gameBoard= new GameBoard();
+    public GameScreen(){}
+
 
     @Override
     public void init() {

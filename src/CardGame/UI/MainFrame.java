@@ -33,6 +33,7 @@ public class MainFrame extends JFrame {
             anotherScreen.requestFocus();
 
             this.setCurrentScreen(anotherScreen);
+            anotherScreen.setParentFrame(this);
             anotherScreen.init();
         }
         public Screen getCurrentScreen() {

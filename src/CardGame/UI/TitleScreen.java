@@ -8,8 +8,8 @@ import java.awt.*;
 
 public class TitleScreen extends Screen {
 
-    public TitleScreen(int width, int height, MainFrame frame) {
-        super(width, height);
+    public TitleScreen(MainFrame frame) {
+
         setParentFrame(frame);
 
 
@@ -45,9 +45,9 @@ public class TitleScreen extends Screen {
         leaderBoardButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         exitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        startButton.addActionListener(e -> this.getParentFrame().replaceCurrentScreenWith(new GameScreen(800,600)));
-        gameRuleButton.addActionListener(e -> this.getParentFrame().replaceCurrentScreenWith(new GameRuleScreen(800,600)));
-        leaderBoardButton.addActionListener(e-> this.getParentFrame().replaceCurrentScreenWith(new LeaderBoardScreen(800,600)));
+        startButton.addActionListener(e -> this.getParentFrame().replaceCurrentScreenWith(new GameScreen()));
+        gameRuleButton.addActionListener(e -> this.getParentFrame().replaceCurrentScreenWith(new GameRuleScreen(getParentFrame())));
+        leaderBoardButton.addActionListener(e-> this.getParentFrame().replaceCurrentScreenWith(new LeaderBoardScreen()));
         exitButton.addActionListener(e -> System.exit(0));
 
 
