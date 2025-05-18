@@ -45,7 +45,7 @@ public class GameBoard {
         if(flippedCards.size() == 2){
             Card c1 = flippedCards.get(0);
             Card c2 = flippedCards.get(1);
-            boolean isMatch = c1.getSymbol().equals(c2.getSymbol());
+            boolean isMatch = c1.getCardName().equals(c2.getCardName());
             if(isMatch){
                 c1.setMatched(true);
                 c2.setMatched(true);

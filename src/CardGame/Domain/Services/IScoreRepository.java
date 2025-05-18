@@ -1,8 +1,9 @@
 package CardGame.Domain.Services;
 
 import CardGame.Domain.Entities.Score;
+import java.util.List;
 
-public interface ScoreRepository {
+public interface IScoreRepository {
     void saveScore(Score score);
-    int loadHighScore();
+    List<Score> loadScores();
 }

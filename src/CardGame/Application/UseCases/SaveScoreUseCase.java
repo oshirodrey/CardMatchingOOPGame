@@ -1,11 +1,11 @@
 package CardGame.Application.UseCases;
 
 import CardGame.Domain.Entities.Score;
-import CardGame.Domain.Services.ScoreRepository;
+import CardGame.Domain.Services.IScoreRepository;
 
 public class SaveScoreUseCase {
-    private final ScoreRepository scoreRepository;
-    public SaveScoreUseCase(ScoreRepository repo) {
+    private final IScoreRepository scoreRepository;
+    public SaveScoreUseCase(IScoreRepository repo) {
         this.scoreRepository = repo;
     } //Dependency injection
     public void execute(Score score) {

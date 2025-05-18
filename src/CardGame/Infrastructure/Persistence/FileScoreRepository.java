@@ -2,9 +2,12 @@ package CardGame.Infrastructure.Persistence;
 
 import CardGame.Domain.Entities.GameBoard;
 import CardGame.Domain.Entities.Score;
-import CardGame.Domain.Services.ScoreRepository;
+import java.util.*;
+import CardGame.Domain.Services.IScoreRepository;
 
-public class FileScoreRepository implements ScoreRepository {
+import java.util.List;
+
+public class FileScoreRepository implements IScoreRepository {
     private GameBoard gameBoard;
     public FileScoreRepository(GameBoard gb) {
         this.gameBoard = gb;
@@ -16,9 +19,9 @@ public class FileScoreRepository implements ScoreRepository {
     }
 
     @Override
-    public int loadHighScore() {
-        return 0;
+    public List<Score> loadScores() {
+        return new ArrayList<>();
     }
     //how to actually save your score to DB(in this case: maybe a JSON file)
-    //implement the ScoreRepository interface
+    //implement the IScoreRepository interface
 }

@@ -1,4 +1,14 @@
 package CardGame.UI;
 
-public class LeaderBoardScreen {
+import CardGame.UI.CustomizedComponents.Screen;
+
+public class LeaderBoardScreen extends Screen {
+    public LeaderBoardScreen(int screenWidth, int screenHeight) {
+        super(screenWidth, screenHeight);
+    }
+
+    @Override
+    public void init() {
+
+    }
 }
