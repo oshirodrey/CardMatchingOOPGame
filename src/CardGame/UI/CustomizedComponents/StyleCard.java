@@ -1,6 +1,7 @@
 package CardGame.UI.CustomizedComponents;
 
 import CardGame.Domain.Entities.Card;
+import CardGame.UI.Helpers.ImageCache;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,21 +14,17 @@ public class StyleCard extends JButton implements MouseListener {
     private final int cardWidth= 90;
     private final int cardHeight= 128;
     //Card images
-    private Image cardBackImg = new ImageIcon(getClass().getResource("/Cards/back.png")).getImage();
-    private ImageIcon cardBack = new ImageIcon(cardBackImg.getScaledInstance(cardWidth, cardHeight, Image.SCALE_SMOOTH));
+    private ImageIcon cardBack = new ImageIcon(ImageCache.getScaledImage("/Cards/back.png", cardWidth, cardHeight));
+    private ImageIcon cardBackHover = new ImageIcon(ImageCache.getScaledImage("/Cards/backHover.png", cardWidth, cardHeight));
 
-    private Image cardBackHoverImg = new ImageIcon(getClass().getResource("/Cards/backHover.png")).getImage();
-    private ImageIcon cardBackHover = new ImageIcon(cardBackHoverImg.getScaledInstance(cardWidth, cardHeight, Image.SCALE_SMOOTH));
-
-    private Image cardFontImg;
     private ImageIcon cardFont;
 
 
 
     public StyleCard(Card card) {
         this.card = card;
-        cardFontImg = new ImageIcon(getClass().getResource("/Cards/"+this.card.getCardName()+".png")).getImage();
-        cardFont = new ImageIcon(cardFontImg.getScaledInstance(cardWidth, cardHeight, Image.SCALE_SMOOTH));
+        cardFont = new ImageIcon(ImageCache.getScaledImage("/Cards/" + card.getCardName() + ".png", cardWidth, cardHeight));
+
         init();
     }
     public void init(){

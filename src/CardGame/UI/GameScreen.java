@@ -4,6 +4,7 @@ import CardGame.Domain.Entities.Card;
 import CardGame.Domain.Entities.GameBoard;
 import CardGame.Domain.Services.CardFactory;
 import CardGame.UI.CustomizedComponents.Screen;
+import CardGame.UI.CustomizedComponents.StyleButton;
 import CardGame.UI.CustomizedComponents.StyleCard;
 
 import javax.swing.*;
@@ -38,7 +39,7 @@ public class GameScreen extends Screen {
 
     @Override
     public void init() {
-        this.getParentFrame().setSize(new Dimension(500, 600));
+        this.getParentFrame().setSize(new Dimension(600, 700));
         this.setLayout(new BorderLayout());
         this.setBackground(customGreen);
         this.displayCardDeck = displayCards();
@@ -49,6 +50,10 @@ public class GameScreen extends Screen {
             cardDeckPanel.add(card);
         }
         JLabel timePassedLabel = new JLabel("Time Passed");
+        StyleButton backButton = new StyleButton("Back to Main Menu");
+        backButton.addActionListener(e -> this.getParentFrame().replaceCurrentScreenWith(new TitleScreen(this.getParentFrame())));
+
+        this.add(backButton, BorderLayout.NORTH);
         this.add(cardDeckPanel, BorderLayout.CENTER);
         this.add(timePassedLabel, BorderLayout.SOUTH);
         this.setVisible(true);
