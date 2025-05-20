@@ -86,5 +86,6 @@ public class GameBoard {
     public int getMoveCount() {return moveCount;}
     public ArrayList<Card> getFlippedCards() {return flippedCards;}
     private void clearFlippedCards() {flippedCards.clear();}
+    public int getFlippedCardsSize() {return flippedCards.size();}
 
 }

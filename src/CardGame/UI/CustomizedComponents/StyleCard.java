@@ -1,6 +1,8 @@
 package CardGame.UI.CustomizedComponents;
 
+import CardGame.Application.UseCases.FlipCardUseCase;
 import CardGame.Domain.Entities.Card;
+import CardGame.Domain.Entities.GameBoard;
 import CardGame.UI.Helpers.ImageCache;
 
 import javax.swing.*;
@@ -10,6 +12,8 @@ import java.awt.event.MouseListener;
 
 public class StyleCard extends JButton implements MouseListener {
     private Card card;
+    private GameBoard gameBoard;
+    private FlipCardUseCase flipCardUseCase;
     //Card size
     private final int cardWidth= 90;
     private final int cardHeight= 128;
@@ -20,8 +24,10 @@ public class StyleCard extends JButton implements MouseListener {
 
 
 
-    public StyleCard(Card card) {
+    public StyleCard(Card card, GameBoard gameBoard) {
         this.card = card;
+        this.gameBoard = gameBoard;
+        flipCardUseCase = new FlipCardUseCase(gameBoard);
         cardFont = ImageCache.loadCardImage(this.card.getCardName());
         init();
     }
@@ -42,8 +48,10 @@ public class StyleCard extends JButton implements MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        card.flip();
-        this.setIcon(cardFont);
+        if(gameBoard.getFlippedCardsSize()< 2) {
+            flipCardUseCase.execute(card.getRow(), card.getCol());
+            this.setIcon(cardFont);
+        }
     }
 
     @Override

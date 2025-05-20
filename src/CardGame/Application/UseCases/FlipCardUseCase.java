@@ -8,7 +8,8 @@ public class FlipCardUseCase {
 
         this.gameBoard = gameBoard;
     }
-    public void execute(int col, int row) {
-        gameBoard.flipCard(col, row);
+    public void execute(int row, int col) {
+        gameBoard.flipCard(row, col);
+
     }
 }

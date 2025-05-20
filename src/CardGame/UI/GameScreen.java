@@ -23,14 +23,14 @@ public class GameScreen extends Screen {
     private final int rows= 4;
     private final int cols= 5;
     public GameScreen() {
-      shuffledCardDeck = CardFactory.createShuffledCardPairs(cardNameList);
+      shuffledCardDeck = CardFactory.createShuffledCardPairs(cardNameList,rows,cols);
       gameBoard = new GameBoard(rows,cols, shuffledCardDeck);
     }
 
     public ArrayList<StyleCard> displayCards() {
         ArrayList<StyleCard> cards = new ArrayList<>();
       for (Card card : shuffledCardDeck) {
-          StyleCard styleCard = new StyleCard(card);
+          StyleCard styleCard = new StyleCard(card,gameBoard);
           cards.add(styleCard);
       }
       return cards;
@@ -63,10 +63,11 @@ public class GameScreen extends Screen {
         JLabel timePassedLabel = new JLabel("     Time Passed: 0 second" );
 
 
-        // Timer that ticks every 1000 milliseconds (1 second)
+        // Timer that ticks every 100 milliseconds
         Timer timer = new Timer(100, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                timePassedLabel.setText("      Time Passed: " + gameBoard.getElapsedTime() + " seconds");
+                moveCountLabel.setText("Move: "+gameBoard.getMoveCount());
+                timePassedLabel.setText("     Time Passed: " + gameBoard.getElapsedTime() + " seconds");
             }});
         timer.start();
         StyleButton backButton = new StyleButton("Back to Main Menu");
