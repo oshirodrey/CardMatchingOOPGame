@@ -45,6 +45,7 @@ public class GameScreen extends Screen {
         this.displayCardDeck = displayCards();
 
         JPanel cardDeckPanel = new JPanel();
+        cardDeckPanel.setBackground(customGreen);
         cardDeckPanel.setLayout(new GridLayout(rows,cols));
         for (StyleCard card : displayCardDeck) {
             cardDeckPanel.add(card);

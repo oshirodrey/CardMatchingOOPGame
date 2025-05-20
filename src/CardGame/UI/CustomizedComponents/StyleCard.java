@@ -14,17 +14,15 @@ public class StyleCard extends JButton implements MouseListener {
     private final int cardWidth= 90;
     private final int cardHeight= 128;
     //Card images
-    private ImageIcon cardBack = new ImageIcon(ImageCache.getScaledImage("/Cards/back.png", cardWidth, cardHeight));
-    private ImageIcon cardBackHover = new ImageIcon(ImageCache.getScaledImage("/Cards/backHover.png", cardWidth, cardHeight));
-
+    private ImageIcon cardBack = ImageCache.loadCardImage("back");
+    private ImageIcon cardBackHover = ImageCache.loadCardImage("backHover");
     private ImageIcon cardFont;
 
 
 
     public StyleCard(Card card) {
         this.card = card;
-        cardFont = new ImageIcon(ImageCache.getScaledImage("/Cards/" + card.getCardName() + ".png", cardWidth, cardHeight));
-
+        cardFont = ImageCache.loadCardImage(this.card.getCardName());
         init();
     }
     public void init(){

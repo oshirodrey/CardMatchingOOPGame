@@ -2,9 +2,12 @@ package CardGame.UI;
 
 import CardGame.UI.CustomizedComponents.Screen;
 import CardGame.UI.CustomizedComponents.StyleButton;
+import CardGame.UI.Helpers.ImageCache;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
+import java.util.List;
 
 public class TitleScreen extends Screen {
 
@@ -36,6 +39,7 @@ public class TitleScreen extends Screen {
         buttonContainer.setLayout(new BoxLayout(buttonContainer, BoxLayout.Y_AXIS));
 
         StyleButton startButton = new StyleButton("Start Game");
+        startButton.setEnabled(false);//temporarily disable this button for background loading
         StyleButton gameRuleButton = new StyleButton("Rules");
         StyleButton leaderBoardButton = new StyleButton("Leaderboard");
         StyleButton exitButton = new StyleButton("Exit Game");
@@ -59,5 +63,22 @@ public class TitleScreen extends Screen {
         this.add(gameIconLabel, BorderLayout.NORTH);
         this.add(gameTitle, BorderLayout.CENTER);
         this.add(buttonContainer, BorderLayout.SOUTH);
+        preloadImagesInBackground(startButton);
+    }
+    private void preloadImagesInBackground(JButton startButton) {
+        SwingWorker<Void, Void> loader = new SwingWorker<>() {
+            @Override
+            protected Void doInBackground() {
+                List<String> cardNames = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h", "i", "j");
+                ImageCache.preloadAllImages(cardNames);
+                return null;
+            }
+
+            @Override
+            protected void done() {
+                startButton.setEnabled(true); // enable when done
+            }
+        };
+        loader.execute();
     }
 }
