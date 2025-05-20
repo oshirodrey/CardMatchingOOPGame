@@ -2,9 +2,9 @@ package CardGame.Domain.Entities;
 
 public class Score {
     private final int moveCount;
-    private final long elapsedTime;
+    private final double elapsedTime;
 
-    public Score(int moveCount, long elapsedTime) {
+    public Score(int moveCount, double elapsedTime) {
         this.moveCount = moveCount;
         this.elapsedTime = elapsedTime;
     }
@@ -13,7 +13,12 @@ public class Score {
         return moveCount;
     }
 
-    public long getElapsedTime() {
+    public double getElapsedTime() {
         return elapsedTime;
+    }
+
+    @Override
+    public String toString() {
+        return "Move: " + moveCount + " ElapsedTime: " + elapsedTime;
     }
 }

@@ -1,4 +1,13 @@
 package CardGame.UI;
 
-public class WinScreen {
+import CardGame.UI.CustomizedComponents.Screen;
+
+public class WinScreen extends Screen {
+
+
+
+    @Override
+    public void init() {
+
+    }
 }

@@ -71,8 +71,8 @@ public class GameBoard {
         return true;
     }
 
-    public long getElapsedTime() {
-        return System.currentTimeMillis() - startTime;
+    public double getElapsedTime() {
+        return (System.currentTimeMillis() - startTime)/1000.0;
     }
 
     public Score getScoreSnapshot() {

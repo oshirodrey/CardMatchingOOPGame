@@ -9,6 +9,8 @@ import CardGame.UI.CustomizedComponents.StyleCard;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -50,13 +52,35 @@ public class GameScreen extends Screen {
         for (StyleCard card : displayCardDeck) {
             cardDeckPanel.add(card);
         }
-        JLabel timePassedLabel = new JLabel("Time Passed");
+
+        //RUN'S INFORMATION STORING
+        JPanel runInfoPanel = new JPanel();
+        runInfoPanel.setBackground(customGreen);
+        runInfoPanel.setLayout(new BoxLayout(runInfoPanel,BoxLayout.X_AXIS));
+
+
+        JLabel moveCountLabel = new JLabel("Move: 0");
+        JLabel timePassedLabel = new JLabel("     Time Passed: 0 second" );
+
+
+        // Timer that ticks every 1000 milliseconds (1 second)
+        Timer timer = new Timer(100, new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                timePassedLabel.setText("      Time Passed: " + gameBoard.getElapsedTime() + " seconds");
+            }});
+        timer.start();
         StyleButton backButton = new StyleButton("Back to Main Menu");
-        backButton.addActionListener(e -> this.getParentFrame().replaceCurrentScreenWith(new TitleScreen(this.getParentFrame())));
+        backButton.addActionListener(e -> {
+            timer.stop();
+            this.getParentFrame().replaceCurrentScreenWith(new TitleScreen(this.getParentFrame())); });
+
+        runInfoPanel.add(moveCountLabel);
+        runInfoPanel.add(timePassedLabel);
+
 
         this.add(backButton, BorderLayout.NORTH);
         this.add(cardDeckPanel, BorderLayout.CENTER);
-        this.add(timePassedLabel, BorderLayout.SOUTH);
+        this.add(runInfoPanel, BorderLayout.SOUTH);
         this.setVisible(true);
 
 
