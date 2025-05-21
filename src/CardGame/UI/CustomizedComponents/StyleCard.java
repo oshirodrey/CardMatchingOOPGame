@@ -1,8 +1,6 @@
 package CardGame.UI.CustomizedComponents;
 
-import CardGame.Application.UseCases.FlipCardUseCase;
 import CardGame.Domain.Entities.Card;
-import CardGame.Domain.Entities.GameBoard;
 import CardGame.UI.Helpers.ImageCache;
 
 import javax.swing.*;
@@ -12,8 +10,7 @@ import java.awt.event.MouseListener;
 
 public class StyleCard extends JButton implements MouseListener {
     private Card card;
-    private GameBoard gameBoard;
-    private FlipCardUseCase flipCardUseCase;
+    private CardClickListener cardClickListener;
     //Card size
     private final int cardWidth= 90;
     private final int cardHeight= 128;
@@ -21,13 +18,13 @@ public class StyleCard extends JButton implements MouseListener {
     private ImageIcon cardBack = ImageCache.loadCardImage("back");
     private ImageIcon cardBackHover = ImageCache.loadCardImage("backHover");
     private ImageIcon cardFont;
+    private ImageIcon currentIcon;
 
 
 
-    public StyleCard(Card card, GameBoard gameBoard) {
+    public StyleCard(Card card,CardClickListener cardClickListener) {
         this.card = card;
-        this.gameBoard = gameBoard;
-        flipCardUseCase = new FlipCardUseCase(gameBoard);
+        this.cardClickListener = cardClickListener;
         cardFont = ImageCache.loadCardImage(this.card.getCardName());
         init();
     }
@@ -48,28 +45,49 @@ public class StyleCard extends JButton implements MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        if(gameBoard.getFlippedCardsSize()< 2) {
-            flipCardUseCase.execute(card.getRow(), card.getCol());
-            this.setIcon(cardFont);
+        if (!card.isFaceUp()){
+            cardClickListener.onCardClicked(this);//notify the parent
         }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
 
+
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        if(!card.isFaceUp()) {
+        if(!card.isFaceUp() && currentIcon == cardBack) {
             this.setIcon(cardBackHover);
-        }
+        }// only change the icon to cardBackHover if the initial icon is cardBack
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        if(!card.isFaceUp()) {
-            this.setIcon(cardBack);
+        if(currentIcon == cardBackHover){
+            updateCardIcons();
         }
     }
+
+    public void updateCardIcons() {
+
+            if (card.isFaceUp()) {
+                this.setIcon(cardFont);
+            } else {
+                this.setIcon(cardBack);
+            }
+
+    }
+
+    public void showCardFont(){
+        this.setIcon(cardFont);
+    }
+    public Card getCardEntity() {return card;}
+
+    @Override
+    public void setIcon(Icon icon) {
+        super.setIcon(icon);
+        currentIcon = (ImageIcon) icon;//Override to set this
+    }// this will avoid the card being flipped back before the delay time ends
 }
