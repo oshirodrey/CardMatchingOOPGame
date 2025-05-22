@@ -2,6 +2,7 @@ package CardGame.UI;
 
 import CardGame.UI.CustomizedComponents.Screen;
 import CardGame.UI.CustomizedComponents.StyleButton;
+import CardGame.UI.Helpers.ButtonFactory;
 import CardGame.UI.Helpers.ImageCache;
 
 import javax.swing.*;
@@ -40,17 +41,18 @@ public class TitleScreen extends Screen {
 
         StyleButton startButton = new StyleButton("Start Game");
         startButton.setEnabled(false);//temporarily disable this button for background loading
-        StyleButton gameRuleButton = new StyleButton("Rules");
+//        StyleButton gameRuleButton = new StyleButton("Rules");
+        StyleButton gameRuleButton = ButtonFactory.createRuleButton("Rule", this);
         StyleButton leaderBoardButton = new StyleButton("Leaderboard");
         StyleButton exitButton = new StyleButton("Exit Game");
 
         startButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        gameRuleButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+//        gameRuleButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         leaderBoardButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         exitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         startButton.addActionListener(e -> this.getParentFrame().replaceCurrentScreenWith(new GameScreen()));
-        gameRuleButton.addActionListener(e -> this.getParentFrame().replaceCurrentScreenWith(new GameRuleScreen(getParentFrame())));
+//        gameRuleButton.addActionListener(e -> this.getParentFrame().replaceCurrentScreenWith(new GameRuleScreen(getParentFrame())));
         leaderBoardButton.addActionListener(e-> this.getParentFrame().replaceCurrentScreenWith(new LeaderBoardScreen()));
         exitButton.addActionListener(e -> System.exit(0));
 

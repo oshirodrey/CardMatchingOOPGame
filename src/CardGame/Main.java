@@ -3,6 +3,7 @@ package CardGame;
 import CardGame.InterfaceAdapters.Controller.GameController;
 import CardGame.UI.MainFrame;
 import CardGame.UI.TitleScreen;
+import CardGame.UI.WinScreen;
 
 import java.awt.*;
 
@@ -17,7 +18,10 @@ public class Main {
         ts.init();
         ts.setVisible(true);
 
-        frame.add(ts);
+        WinScreen win = new WinScreen(frame);
+        win.init();
+        win.setVisible(true);
+        frame.add(win);
         frame.setVisible(true);
     }
 }

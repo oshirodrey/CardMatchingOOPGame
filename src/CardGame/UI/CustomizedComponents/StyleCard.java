@@ -46,7 +46,10 @@ public class StyleCard extends JButton implements MouseListener {
     @Override
     public void mousePressed(MouseEvent e) {
         if (!card.isFaceUp()){
-            cardClickListener.onCardClicked(this);//notify the parent
+            cardClickListener.onCardClicked(this);
+            //instead of the style card handling what happens after the click
+            //the game screen will now do that for the card
+            //callback pattern
         }
     }
 
