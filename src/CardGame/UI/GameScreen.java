@@ -75,6 +75,9 @@ public class GameScreen extends Screen implements CardClickListener {
             public void actionPerformed(ActionEvent e) {
                 moveCountLabel.setText("Move: "+gameBoard.getMoveCount());
                 timePassedLabel.setText("     Time Passed: " + gameBoard.getElapsedTime() + " seconds");
+                if(gameBoard.isAllCardsMatched()){
+                    getParentFrame().replaceCurrentScreenWith(new WinScreen(getParentFrame(),gameBoard.getScoreSnapshot()));
+                }
             }});
         timer.start();
         StyleButton backButton = new StyleButton("Back to Main Menu");
@@ -103,7 +106,7 @@ public class GameScreen extends Screen implements CardClickListener {
 
             if (gameBoard.getFlippedCardsSize() == 2) {
 
-                Timer timer = new Timer(1500, e -> {
+                Timer timer = new Timer(1000, e -> {
                     checkForMatchUseCase.execute();
                     updateCardIcons(); // Loop through styleCards to update icons
                 });

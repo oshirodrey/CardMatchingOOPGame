@@ -6,4 +6,5 @@ import java.util.List;
 public interface IScoreRepository {
     void saveScore(Score score);
     List<Score> loadScores();
+    void saveAll(List<Score> scores);
 }

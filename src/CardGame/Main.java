@@ -18,10 +18,10 @@ public class Main {
         ts.init();
         ts.setVisible(true);
 
-        WinScreen win = new WinScreen(frame);
-        win.init();
-        win.setVisible(true);
-        frame.add(win);
+//        WinScreen win = new WinScreen(frame);
+//        win.init();
+//        win.setVisible(true);
+        frame.add(ts);
         frame.setVisible(true);
     }
 }

@@ -1,6 +1,9 @@
 package CardGame.UI;
 
+import CardGame.Application.UseCases.SaveScoresUseCase;
 import CardGame.Domain.Entities.Score;
+import CardGame.Domain.Services.IScoreRepository;
+import CardGame.Infrastructure.Persistence.FileScoreRepository;
 import CardGame.UI.CustomizedComponents.Screen;
 import CardGame.UI.CustomizedComponents.StyleButton;
 import CardGame.UI.Helpers.ButtonFactory;
@@ -10,8 +13,13 @@ import java.awt.*;
 
 public class WinScreen extends Screen {
     private Score score;
-    public WinScreen(MainFrame frame) {
+    private IScoreRepository scoreRepository;
+    private SaveScoresUseCase saveScoresUseCase;
+    public WinScreen(MainFrame frame,Score score) {
         setParentFrame(frame);
+        this.score = score;
+        this.scoreRepository = new FileScoreRepository();
+        this.saveScoresUseCase = new SaveScoresUseCase(scoreRepository);
     }
 
 
@@ -20,6 +28,12 @@ public class WinScreen extends Screen {
         this.getParentFrame().setSize(new Dimension(800, 600));
         this.setBackground(customGreen);
         this.setLayout(new BorderLayout());
+        //display score (and corresponding message, icon)
+        JPanel scorePanel = new JPanel();
+        scorePanel.setBackground(customGreen);
+        scorePanel.setLayout(new BoxLayout(scorePanel, BoxLayout.Y_AXIS));
+        JLabel scoreLabel = new JLabel("Moves: "+score.getMoveCount()+" Time: "+ score.getElapsedTime());
+
 
 
 

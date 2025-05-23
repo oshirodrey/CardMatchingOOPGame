@@ -1,50 +1,55 @@
 package CardGame.Infrastructure.Persistence;
 
-import CardGame.Domain.Entities.GameBoard;
 import CardGame.Domain.Entities.Score;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 import CardGame.Domain.Services.IScoreRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.util.List;
 
 public class FileScoreRepository implements IScoreRepository {
-    private GameBoard gameBoard;
-    public FileScoreRepository(GameBoard gb) {
-        this.gameBoard = gb;
-    }
+    private final File file =  new File("/src/CardGame/Infrastructure/Persistence/ScoreData.txt");
+//    public FileScoreRepository(String filepath) {
+//        this.file = new File(filepath);
+////        try {
+////            file.createNewFile(); // creates if it doesn’t exist
+////        } catch (IOException e) {
+////            throw new RuntimeException("Failed to create score file", e);
+////        }
+//    }
+
     @Override
     public void saveScore(Score score) {
-
-
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
+            writer.write(score.toString());
+            writer.newLine();
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to save score", e);
+        }
     }
 
     @Override
     public List<Score> loadScores() {
-        return new ArrayList<>();
-    }
-    //how to actually save your score to DB(in this case: maybe a JSON file)
-    //implement the IScoreRepository interface
-
-    public void loadProductsFromDB(String filePath) {
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            // Directly assign the list from Jackson's deserialization
-            products = mapper.readValue(new File(filePath), new TypeReference<ArrayList<Product>>() {});
+        List<Score> scores = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                scores.add(Score.fromString(line));
+            }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Failed to load scores", e);
         }
+        return scores;
     }
-
-    public void updateDB() {
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            mapper.writerWithDefaultPrettyPrinter().writeValue(new File(filePath), products);
+    @Override
+    public void saveAll(List<Score> scores) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+            for (Score score : scores) {
+                writer.write(score.toString());
+                writer.newLine();
+            }
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Failed to overwrite scores", e);
         }
     }
 }

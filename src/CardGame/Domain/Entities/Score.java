@@ -19,6 +19,13 @@ public class Score {
 
     @Override
     public String toString() {
-        return "Move: " + moveCount + " ElapsedTime: " + elapsedTime;
+        return moveCount + "," + elapsedTime;
+    }
+
+    public static Score fromString(String line) {
+        String[] parts = line.split(",");
+        int moves = Integer.parseInt(parts[0]);
+        double time = Double.parseDouble(parts[1]);
+        return new Score(moves, time);
     }
 }
