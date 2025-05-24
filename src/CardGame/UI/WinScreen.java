@@ -36,17 +36,22 @@ public class WinScreen extends Screen {
         JPanel scorePanel = new JPanel();
         scorePanel.setBackground(customGreen);
         scorePanel.setLayout(new BoxLayout(scorePanel, BoxLayout.Y_AXIS));
-        scorePanel.setFont(new Font("Arial", Font.BOLD, 30));
-        JLabel scoreLabel = new JLabel("Moves: "+score.getMoveCount()+" Time: "+ score.getElapsedTime());
+
+        JLabel iconLabel = new JLabel(winingIcon());
         JLabel winingTextLabel = winningLabel();
+        JLabel playerScoreLabel = new JLabel("Your score: Moves: "+score.getMoveCount()+" Time: "+ score.getElapsedTime());
+
+        JLabel bestScoreLabel = bestScoreLabel();
 
 
 
+        iconLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        playerScoreLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        scoreLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-
+        scorePanel.add(iconLabel);
         scorePanel.add(winingTextLabel);
-        scorePanel.add(scoreLabel);
+        scorePanel.add(playerScoreLabel);
+        scorePanel.add(bestScoreLabel);
 
 
 
@@ -102,4 +107,29 @@ public class WinScreen extends Screen {
 
         return winningLabel;
     }
+    private ImageIcon winingIcon() {
+        String filePath;
+        if (isBestScore(this.score)) {
+            filePath = "/Game/best_score.png";
+        } else {
+            filePath = "/Game/normal_score.png";
+        }
+        Image iconImg = new ImageIcon(this.getClass().getResource(filePath)).getImage();
+        ImageIcon winingIcon = new ImageIcon(iconImg.getScaledInstance(200, 200, Image.SCALE_SMOOTH));
+        return winingIcon;
+    }
+    private JLabel bestScoreLabel(){
+        String text;
+        if (isBestScore(this.score)) {
+            text = "Your score is currently the best!";
+        }
+        else {
+            text= "Current best score: Move: "+scoreRepository.loadScores().get(0).getMoveCount()+" Time: "+ scoreRepository.loadScores().get(0).getElapsedTime();
+        }
+        JLabel bestScoreLabel = new JLabel(text);
+        bestScoreLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        return bestScoreLabel;
+
+    }
+
 }

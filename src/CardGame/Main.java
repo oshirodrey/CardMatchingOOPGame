@@ -1,5 +1,6 @@
 package CardGame;
 
+import CardGame.Domain.Entities.Score;
 import CardGame.InterfaceAdapters.Controller.GameController;
 import CardGame.UI.MainFrame;
 import CardGame.UI.TitleScreen;
@@ -17,11 +18,11 @@ public class Main {
         TitleScreen ts = new TitleScreen(frame);
         ts.init();
         ts.setVisible(true);
-
-//        WinScreen win = new WinScreen(frame);
-//        win.init();
-//        win.setVisible(true);
-        frame.add(ts);
+        Score score = new Score(7,5.0);
+        WinScreen win = new WinScreen(frame,score);
+        win.init();
+        win.setVisible(true);
+        frame.add(win);
         frame.setVisible(true);
     }
 }
