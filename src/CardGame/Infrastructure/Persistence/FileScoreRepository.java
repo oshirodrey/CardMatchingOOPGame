@@ -8,7 +8,7 @@ import CardGame.Domain.Services.IScoreRepository;
 import java.util.List;
 
 public class FileScoreRepository implements IScoreRepository {
-    private final File file =  new File("/src/CardGame/Infrastructure/Persistence/ScoreData.txt");
+    private final File file =  new File("./src/CardGame/Infrastructure/Persistence/ScoreData.txt");
 //    public FileScoreRepository(String filepath) {
 //        this.file = new File(filepath);
 ////        try {
@@ -50,6 +50,15 @@ public class FileScoreRepository implements IScoreRepository {
             }
         } catch (IOException e) {
             throw new RuntimeException("Failed to overwrite scores", e);
+        }
+    }
+
+    public static void main(String[] args) {
+        File file =  new File("./src/CardGame/Infrastructure/Persistence/ScoreData.txt");
+        if (!file.exists()) {
+            System.out.println("File not found at: " + file.getAbsolutePath());
+        } else {
+            System.out.println("File found: " + file.getAbsolutePath());
         }
     }
 }

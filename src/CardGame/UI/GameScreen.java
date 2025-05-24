@@ -27,6 +27,7 @@ public class GameScreen extends Screen implements CardClickListener {
     private CheckForMatchUseCase checkForMatchUseCase;
     private final int rows= 4;
     private final int cols= 5;
+    private Timer gameTimer;
     public GameScreen() {
       shuffledCardDeck = CardFactory.createShuffledCardPairs(cardNameList,rows,cols);
       gameBoard = new GameBoard(rows,cols, shuffledCardDeck);
@@ -71,18 +72,23 @@ public class GameScreen extends Screen implements CardClickListener {
 
 
         // Timer that ticks every 100 milliseconds
-        Timer timer = new Timer(100, new ActionListener() {
+        this.gameTimer = new Timer(100, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 moveCountLabel.setText("Move: "+gameBoard.getMoveCount());
                 timePassedLabel.setText("     Time Passed: " + gameBoard.getElapsedTime() + " seconds");
                 if(gameBoard.isAllCardsMatched()){
-                    getParentFrame().replaceCurrentScreenWith(new WinScreen(getParentFrame(),gameBoard.getScoreSnapshot()));
+                    gameTimer.stop();
+                    SwingUtilities.invokeLater(() -> {
+                        getParentFrame().replaceCurrentScreenWith(
+                                new WinScreen(getParentFrame(), gameBoard.getScoreSnapshot())
+                        );
+                    });
                 }
             }});
-        timer.start();
+        gameTimer.start();
         StyleButton backButton = new StyleButton("Back to Main Menu");
         backButton.addActionListener(e -> {
-            timer.stop();
+            gameTimer.stop();
             this.getParentFrame().replaceCurrentScreenWith(new TitleScreen(this.getParentFrame())); });
 
         runInfoPanel.add(moveCountLabel);
