@@ -39,23 +39,12 @@ public class TitleScreen extends Screen {
         buttonContainer.setBackground(customGreen);
         buttonContainer.setLayout(new BoxLayout(buttonContainer, BoxLayout.Y_AXIS));
 
-        StyleButton startButton = new StyleButton("Start Game");
+        //create buttons
+        StyleButton startButton = ButtonFactory.createStartGameButton("Start Game",this);
         startButton.setEnabled(false);//temporarily disable this button for background loading
-//        StyleButton gameRuleButton = new StyleButton("Rules");
         StyleButton gameRuleButton = ButtonFactory.createRuleButton("Rule", this);
-        StyleButton leaderBoardButton = new StyleButton("Leaderboard");
-        StyleButton exitButton = new StyleButton("Exit Game");
-
-        startButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-//        gameRuleButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        leaderBoardButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        exitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        startButton.addActionListener(e -> this.getParentFrame().replaceCurrentScreenWith(new GameScreen()));
-//        gameRuleButton.addActionListener(e -> this.getParentFrame().replaceCurrentScreenWith(new GameRuleScreen(getParentFrame())));
-        leaderBoardButton.addActionListener(e-> this.getParentFrame().replaceCurrentScreenWith(new LeaderBoardScreen()));
-        exitButton.addActionListener(e -> System.exit(0));
-
+        StyleButton leaderBoardButton = ButtonFactory.createLeaderBoardButton("Leaderboard",this);
+        StyleButton exitButton = ButtonFactory.createExitButton("Exit Game",this);
 
         buttonContainer.add(startButton);
         buttonContainer.add(gameRuleButton);

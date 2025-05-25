@@ -18,11 +18,11 @@ public class Main {
         TitleScreen ts = new TitleScreen(frame);
         ts.init();
         ts.setVisible(true);
-        Score score = new Score(7,5.0);
-        WinScreen win = new WinScreen(frame,score);
-        win.init();
-        win.setVisible(true);
-        frame.add(win);
+//        Score score = new Score(7,5.0);
+//        WinScreen win = new WinScreen(frame,score);
+//        win.init();
+//        win.setVisible(true);
+        frame.add(ts);
         frame.setVisible(true);
     }
 }
