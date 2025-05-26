@@ -1,5 +1,7 @@
 package CardGame.UI.Helpers;
 
+import CardGame.UI.CustomizedComponents.StyleCard;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
@@ -9,8 +11,8 @@ import java.util.List;
 
 public class ImageCache {
     private static final Map<String, ImageIcon> cache = new HashMap<>();
-    private static final int WIDTH = 90;
-    private static final int HEIGHT = 128;
+    private static final int cardWidth = StyleCard.getCardWidth();
+    private static final int cardHeight = StyleCard.getCardHeight();
 
     public static void preloadAllImages(List<String> cardNames) {
         for (String name : cardNames) {
@@ -24,7 +26,7 @@ public class ImageCache {
         if (!cache.containsKey(cardName)) {
             Image img = new ImageIcon(ImageCache.class.getResource("/Cards/" + cardName + ".png"))
                     .getImage()
-                    .getScaledInstance(WIDTH, HEIGHT, Image.SCALE_SMOOTH);
+                    .getScaledInstance(cardWidth, cardHeight, Image.SCALE_SMOOTH);
             cache.put(cardName, new ImageIcon(img));
         }
         return cache.get(cardName);

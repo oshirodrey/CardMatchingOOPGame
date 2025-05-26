@@ -73,7 +73,7 @@ public class GameScreen extends Screen implements CardClickListener, IUIControll
 
     @Override
     public void init() {
-        this.getParentFrame().setSize(new Dimension(600, 700));
+        this.getParentFrame().setSize(new Dimension(550, 800));
         this.setLayout(new BorderLayout());
         this.setBackground(customGreen);
         this.displayCardDeck = displayCards();
