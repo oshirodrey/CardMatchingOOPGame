@@ -12,8 +12,9 @@ public class StyleCard extends JButton implements MouseListener {
     private Card card;
     private CardClickListener cardClickListener;
     //Card size
-    private final int cardWidth= 90;
-    private final int cardHeight= 128;
+    private static final int scale =8;
+    private static final int cardWidth=10*scale;
+    private static final int cardHeight= 22*scale;
     //Card images
     private ImageIcon cardBack = ImageCache.loadCardImage("back");
     private ImageIcon cardBackHover = ImageCache.loadCardImage("backHover");
@@ -93,4 +94,12 @@ public class StyleCard extends JButton implements MouseListener {
         super.setIcon(icon);
         currentIcon = (ImageIcon) icon;//Override to set this
     }// this will avoid the card being flipped back before the delay time ends
+
+
+    public static int getCardWidth() {
+        return cardWidth;
+    }
+    public static int getCardHeight() {
+        return cardHeight;
+    }
 }
