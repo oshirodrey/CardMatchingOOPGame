@@ -30,11 +30,11 @@ public class WinScreen extends Screen {
     @Override
     public void init() {
         this.getParentFrame().setSize(new Dimension(800, 600));
-        this.setBackground(customGreen);
+        this.setBackground(customPink);
         this.setLayout(new BorderLayout());
         //display score (and corresponding message, icon)
         JPanel scorePanel = new JPanel();
-        scorePanel.setBackground(customGreen);
+        scorePanel.setBackground(customPink);
         scorePanel.setLayout(new BoxLayout(scorePanel, BoxLayout.Y_AXIS));
 
         JLabel iconLabel = new JLabel(winingIcon());
@@ -61,7 +61,7 @@ public class WinScreen extends Screen {
         //button container
         JPanel buttonContainer = new JPanel();
         buttonContainer.setLayout(new BoxLayout(buttonContainer, BoxLayout.Y_AXIS));
-        buttonContainer.setBackground(customGreen);
+        buttonContainer.setBackground(customPink);
         StyleButton leaderBoardButton = ButtonFactory.createLeaderBoardButton("Leader Board", this);
         StyleButton backButton = ButtonFactory.createBackButton("Back to Main Menu", this);
         buttonContainer.add(leaderBoardButton);

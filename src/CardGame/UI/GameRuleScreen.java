@@ -15,7 +15,7 @@ public class GameRuleScreen extends Screen {
     public void init() {
         this.getParentFrame().setSize(new Dimension(800, 600));
         this.setLayout(new BorderLayout());
-        this.setBackground(customGreen);
+        this.setBackground(customPink);
 
         JLabel ruleLabel = new JLabel(
                 "<html>" +
@@ -36,7 +36,7 @@ public class GameRuleScreen extends Screen {
 
         JPanel buttonContainer = new JPanel();
         buttonContainer.setOpaque(false);
-        buttonContainer.setBackground(customGreen);
+        buttonContainer.setBackground(customPink);
         buttonContainer.setLayout(new BoxLayout(buttonContainer, BoxLayout.Y_AXIS));
 
         StyleButton startButton = new StyleButton("Start Game");

@@ -73,13 +73,13 @@ public class GameScreen extends Screen implements CardClickListener, IUIControll
 
     @Override
     public void init() {
-        this.getParentFrame().setSize(new Dimension(550, 800));
+        this.getParentFrame().setSize(new Dimension(900, 800));
         this.setLayout(new BorderLayout());
-        this.setBackground(customGreen);
+        this.setBackground(customPink);
         this.displayCardDeck = displayCards();
 
         JPanel cardDeckPanel = new JPanel();
-        cardDeckPanel.setBackground(customGreen);
+        cardDeckPanel.setBackground(customPink);
         cardDeckPanel.setLayout(new GridLayout(rows,cols));
         for (StyleCard card : displayCardDeck) {
             cardDeckPanel.add(card);
@@ -87,7 +87,7 @@ public class GameScreen extends Screen implements CardClickListener, IUIControll
 
         //STORE THE RUN'S INFORMATION
         JPanel runInfoPanel = new JPanel();
-        runInfoPanel.setBackground(customGreen);
+        runInfoPanel.setBackground(customPink);
         runInfoPanel.setLayout(new BoxLayout(runInfoPanel,BoxLayout.X_AXIS));
 
 

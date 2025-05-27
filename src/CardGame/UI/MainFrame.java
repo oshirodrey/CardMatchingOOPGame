@@ -13,12 +13,17 @@ public class MainFrame extends JFrame {
 
         private boolean centered;
 
+        private Toolkit toolkit = Toolkit.getDefaultToolkit();
+        private Image image = toolkit.getImage(getClass().getResource("/UI/cursor.png"));
+        private Cursor customCursor = toolkit.createCustomCursor(image, new Point(0, 0), "Custom Cursor");
 
         public MainFrame(Dimension dimension) {
             this.setSize(dimension);
             this.setDefaultCloseOperation(EXIT_ON_CLOSE);
             this.setResizable(false);
             this.centered = false;
+            this.setCursor(customCursor);
+
         }
 
         public void replaceCurrentScreenWith(Screen anotherScreen) {

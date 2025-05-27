@@ -23,7 +23,7 @@ public class TitleScreen extends Screen {
     public void init() {
         this.getParentFrame().setSize(800,600);
         this.setLayout(new BorderLayout());
-        this.setBackground(customGreen);
+        this.setBackground(customPink);
 
         Image gameImg = new ImageIcon(getClass().getResource("/Game/gameIcon.png")).getImage();
         ImageIcon gameIcon = new ImageIcon(gameImg.getScaledInstance(200,200,java.awt.Image.SCALE_SMOOTH));
@@ -36,7 +36,7 @@ public class TitleScreen extends Screen {
 
         JPanel buttonContainer = new JPanel();
         buttonContainer.setOpaque(false);
-        buttonContainer.setBackground(customGreen);
+        buttonContainer.setBackground(customPink);
         buttonContainer.setLayout(new BoxLayout(buttonContainer, BoxLayout.Y_AXIS));
 
         //create buttons

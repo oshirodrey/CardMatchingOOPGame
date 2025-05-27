@@ -6,8 +6,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class StyleButton extends JButton implements MouseListener {
-    private Color initColor = new Color(129,76,29);
-    private Color hoverColor = new Color(235,113,42);
+    private Color initColor = new Color(255, 250, 240);
+    private Color hoverColor = new Color(254, 241, 230);
     private Font initFont = new Font("Serif", Font.PLAIN, 30);
     private Font hoverFont= new Font("Serif", Font.BOLD, 32);
     public StyleButton(String text) {

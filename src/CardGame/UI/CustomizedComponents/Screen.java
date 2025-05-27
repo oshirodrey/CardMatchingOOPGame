@@ -10,7 +10,8 @@ public abstract class Screen extends JPanel {
     private MainFrame parentFrame;
 
 
-    protected Color customGreen = new Color(55,121,86);
+    protected Color customPink = new Color(255,200,221);
+    protected Color customPink2 = new Color(249, 194, 226);
 
     public Screen() {
 

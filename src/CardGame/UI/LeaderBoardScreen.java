@@ -3,7 +3,6 @@ package CardGame.UI;
 import CardGame.Application.UseCases.LoadScoresUseCase;
 import CardGame.Domain.Entities.Score;
 import CardGame.Domain.Services.IScoreRepository;
-import CardGame.Domain.Utils.ScoreUtils;
 import CardGame.Infrastructure.Persistence.FileScoreRepository;
 import CardGame.UI.CustomizedComponents.Screen;
 import CardGame.UI.CustomizedComponents.StyleButton;
@@ -28,13 +27,13 @@ public class LeaderBoardScreen extends Screen {
     @Override
     public void init() {
         this.setLayout(new BorderLayout());
-        this.setBackground(customGreen);
+        this.setBackground(customPink);
 
 
         //leader board panel
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-        mainPanel.setBackground(customGreen);
+        mainPanel.setBackground(customPink);
 
 
         JLabel title = new JLabel("🏆 Leaderboard");
@@ -50,7 +49,7 @@ public class LeaderBoardScreen extends Screen {
         //button container
         JPanel buttonContainer = new JPanel();
         buttonContainer.setLayout(new BoxLayout(buttonContainer, BoxLayout.Y_AXIS));
-        buttonContainer.setBackground(customGreen);
+        buttonContainer.setBackground(customPink);
 
         StyleButton playButton = ButtonFactory.createStartGameButton("Time to make history", this);
         StyleButton rulesButton = ButtonFactory.createRuleButton("Rules", this);
