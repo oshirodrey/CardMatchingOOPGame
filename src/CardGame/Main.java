@@ -10,7 +10,6 @@ import java.awt.*;
 
 public class Main {
     public static void main(String[] args) {
-        GameController gameController = new GameController();
 
         MainFrame frame = new MainFrame(new Dimension(800, 600));
         frame.setResizable(false);

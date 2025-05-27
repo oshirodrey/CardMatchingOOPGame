@@ -4,7 +4,11 @@ import CardGame.Application.UseCases.CheckForMatchUseCase;
 import CardGame.Application.UseCases.FlipCardUseCase;
 import CardGame.Domain.Entities.Card;
 import CardGame.Domain.Entities.GameBoard;
+import CardGame.Domain.Entities.Score;
 import CardGame.Domain.Services.CardFactory;
+import CardGame.InterfaceAdapters.Controller.GameController;
+import CardGame.InterfaceAdapters.IUIController;
+import CardGame.InterfaceAdapters.Presenter.GamePresenter;
 import CardGame.UI.CustomizedComponents.CardClickListener;
 import CardGame.UI.CustomizedComponents.Screen;
 import CardGame.UI.CustomizedComponents.StyleButton;
@@ -18,21 +22,26 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class GameScreen extends Screen implements CardClickListener {
+public class GameScreen extends Screen implements CardClickListener, IUIController {
     private GameBoard gameBoard;
     List<String> cardNameList = new ArrayList<>(Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h","i","j"));
     List<Card> shuffledCardDeck;
     List<StyleCard> displayCardDeck;
     private FlipCardUseCase flipCardUseCase;
     private CheckForMatchUseCase checkForMatchUseCase;
+    private GameController controller;
+    private GamePresenter presenter;
+
     private final int rows= 4;
     private final int cols= 5;
     private Timer gameTimer;
     public GameScreen() {
       shuffledCardDeck = CardFactory.createShuffledCardPairs(cardNameList,rows,cols);
       gameBoard = new GameBoard(rows,cols, shuffledCardDeck);
+      presenter = new GamePresenter(gameBoard, this);
       flipCardUseCase = new FlipCardUseCase(gameBoard);
       checkForMatchUseCase = new CheckForMatchUseCase(gameBoard);
+      controller = new GameController(flipCardUseCase, checkForMatchUseCase, presenter);
     }
 
     public ArrayList<StyleCard> displayCards() {
@@ -105,27 +114,23 @@ public class GameScreen extends Screen implements CardClickListener {
 
     @Override
     public void onCardClicked(StyleCard clickedCard) {
-        if (gameBoard.getFlippedCardsSize() < 2) {
-            //get clicked card location by access the core card entity
-            flipCardUseCase.execute(clickedCard.getCardEntity().getRow(), clickedCard.getCardEntity().getCol());
-            clickedCard.showCardFont();
-
-            if (gameBoard.getFlippedCardsSize() == 2) {
-
-                Timer timer = new Timer(1000, e -> {
-                    checkForMatchUseCase.execute();
-                    updateCardIcons(); // Loop through styleCards to update icons
-                });
-                timer.setRepeats(false);
-                timer.start();
-
-            }
-        }
+       controller.onCardClicked(clickedCard.getCardEntity().getRow(), clickedCard.getCardEntity().getCol());
     }
+    @Override
     public void updateCardIcons() {
         for (StyleCard sc : this.displayCardDeck) {
             sc.updateCardIcons(); // flips back if not face up
         }
+    }
+
+    @Override
+    public void updateMoveAndTime(int moveCount, double time) {
+
+    }
+
+    @Override
+    public void showWinScreen(Score score) {
+
     }
 
 }

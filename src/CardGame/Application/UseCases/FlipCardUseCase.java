@@ -12,4 +12,7 @@ public class FlipCardUseCase {
         gameBoard.flipCard(row, col);
 
     }
+    public GameBoard getGameBoard() {
+        return gameBoard;
+    }
 }
