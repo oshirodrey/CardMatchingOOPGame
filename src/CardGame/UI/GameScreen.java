@@ -23,25 +23,40 @@ import java.util.Arrays;
 import java.util.List;
 
 public class GameScreen extends Screen implements CardClickListener, IUIController {
+    // =================== 🧠 Game Core ===================
     private GameBoard gameBoard;
-    List<String> cardNameList = new ArrayList<>(Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h","i","j"));
-    List<Card> shuffledCardDeck;
-    List<StyleCard> displayCardDeck;
+    private final int rows = 4;
+    private final int cols = 5;
+    private List<String> cardNameList = new ArrayList<>(Arrays.asList(
+            "a", "b", "c", "d", "e", "f", "g", "h", "i", "j"
+    ));
+    private List<Card> shuffledCardDeck;
+
+    // =================== 🎴 UI Components ===================
+    private List<StyleCard> displayCardDeck;
+    private JLabel moveCountLabel;
+    private JLabel timePassedLabel;
+
+    // =================== ⏱ Game Flow Utilities ===================
+    private Timer gameTimer;
+
+    // ======================= 🧩Use Cases =======================
     private FlipCardUseCase flipCardUseCase;
     private CheckForMatchUseCase checkForMatchUseCase;
+
+    // ======================= 🕹️ Adapters ========================
     private GameController controller;
     private GamePresenter presenter;
 
-    private final int rows= 4;
-    private final int cols= 5;
-    private Timer gameTimer;
     public GameScreen() {
       shuffledCardDeck = CardFactory.createShuffledCardPairs(cardNameList,rows,cols);
       gameBoard = new GameBoard(rows,cols, shuffledCardDeck);
+
       presenter = new GamePresenter(gameBoard, this);
       flipCardUseCase = new FlipCardUseCase(gameBoard);
       checkForMatchUseCase = new CheckForMatchUseCase(gameBoard);
       controller = new GameController(flipCardUseCase, checkForMatchUseCase, presenter);
+
     }
 
     public ArrayList<StyleCard> displayCards() {
@@ -70,31 +85,24 @@ public class GameScreen extends Screen implements CardClickListener, IUIControll
             cardDeckPanel.add(card);
         }
 
-        //RUN'S INFORMATION STORING
+        //STORE THE RUN'S INFORMATION
         JPanel runInfoPanel = new JPanel();
         runInfoPanel.setBackground(customGreen);
         runInfoPanel.setLayout(new BoxLayout(runInfoPanel,BoxLayout.X_AXIS));
 
 
-        JLabel moveCountLabel = new JLabel("Move: 0");
-        JLabel timePassedLabel = new JLabel("     Time Passed: 0 second" );
+       moveCountLabel = new JLabel("Move: 0");
+       timePassedLabel = new JLabel("     Time Passed: 0 second" );
 
 
         // Timer that ticks every 100 milliseconds
         this.gameTimer = new Timer(100, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                moveCountLabel.setText("Move: "+gameBoard.getMoveCount());
-                timePassedLabel.setText("     Time Passed: " + gameBoard.getElapsedTime() + " seconds");
-                if(gameBoard.isAllCardsMatched()){
-                    gameTimer.stop();
-                    SwingUtilities.invokeLater(() -> {
-                        getParentFrame().replaceCurrentScreenWith(
-                                new WinScreen(getParentFrame(), gameBoard.getScoreSnapshot())
-                        );
-                    });
-                }
+                presenter.presentStatus();
             }});
         gameTimer.start();
+
+        //this button needs to stop the timer, so I didn't use buttonFactory here
         StyleButton backButton = new StyleButton("Back to Main Menu");
         backButton.addActionListener(e -> {
             gameTimer.stop();
@@ -125,12 +133,18 @@ public class GameScreen extends Screen implements CardClickListener, IUIControll
 
     @Override
     public void updateMoveAndTime(int moveCount, double time) {
-
+        moveCountLabel.setText("Move: " + moveCount);
+        timePassedLabel.setText("     Time Passed: " + time + " seconds");
     }
 
     @Override
     public void showWinScreen(Score score) {
-
+        SwingUtilities.invokeLater(() -> {
+            gameTimer.stop();
+            getParentFrame().replaceCurrentScreenWith(
+                    new WinScreen(getParentFrame(), score)
+            );
+        });
     }
 
 }
