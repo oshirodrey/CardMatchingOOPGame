@@ -3,6 +3,7 @@ package CardGame.UI;
 import CardGame.UI.CustomizedComponents.Screen;
 import CardGame.UI.CustomizedComponents.StyleButton;
 import CardGame.UI.Helpers.ButtonFactory;
+import CardGame.UI.Helpers.FontHelper;
 import CardGame.UI.Helpers.ImageCache;
 
 import javax.swing.*;
@@ -30,7 +31,7 @@ public class TitleScreen extends Screen {
 
         JLabel gameIconLabel = new JLabel(gameIcon);
         JLabel gameTitle = new JLabel("Matching Card");
-        gameTitle.setFont(new Font("Serif", Font.BOLD, 70));
+        gameTitle.setFont(FontHelper.get("Althea-Bold",70f));
         gameTitle.setHorizontalAlignment(SwingConstants.CENTER);
 
 
@@ -40,11 +41,11 @@ public class TitleScreen extends Screen {
         buttonContainer.setLayout(new BoxLayout(buttonContainer, BoxLayout.Y_AXIS));
 
         //create buttons
-        StyleButton startButton = ButtonFactory.createStartGameButton("Start Game",this);
+        StyleButton startButton = ButtonFactory.createStartGameButton(" Start Game ",this);
         startButton.setEnabled(false);//temporarily disable this button for background loading
-        StyleButton gameRuleButton = ButtonFactory.createRuleButton("Rule", this);
-        StyleButton leaderBoardButton = ButtonFactory.createLeaderBoardButton("Leaderboard",this);
-        StyleButton exitButton = ButtonFactory.createExitButton("Exit Game",this);
+        StyleButton gameRuleButton = ButtonFactory.createRuleButton(" Rule ", this);
+        StyleButton leaderBoardButton = ButtonFactory.createLeaderBoardButton(" Leaderboard ",this);
+        StyleButton exitButton = ButtonFactory.createExitButton(" Exit Game ",this);
 
         buttonContainer.add(startButton);
         buttonContainer.add(gameRuleButton);
