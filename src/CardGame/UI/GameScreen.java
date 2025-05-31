@@ -13,7 +13,10 @@ import CardGame.UI.CustomizedComponents.CardClickListener;
 import CardGame.UI.CustomizedComponents.Screen;
 import CardGame.UI.CustomizedComponents.StyleButton;
 import CardGame.UI.CustomizedComponents.StyleCard;
+import CardGame.UI.Sound.BGMPlayer;
+import CardGame.UI.Sound.SFXPlayer;
 
+import javax.sound.sampled.LineUnavailableException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -36,6 +39,8 @@ public class GameScreen extends Screen implements CardClickListener, IUIControll
     private List<StyleCard> displayCardDeck;
     private JLabel moveCountLabel;
     private JLabel timePassedLabel;
+    private BGMPlayer bgmPlayer;
+    private SFXPlayer sfxPlayer;
 
     // =================== ⏱ Game Flow Utilities ===================
     private Timer gameTimer;
@@ -52,7 +57,15 @@ public class GameScreen extends Screen implements CardClickListener, IUIControll
       shuffledCardDeck = CardFactory.createShuffledCardPairs(cardNameList,rows,cols);
       gameBoard = new GameBoard(rows,cols, shuffledCardDeck);
 
-      presenter = new GamePresenter(gameBoard, this);
+
+        try {
+            bgmPlayer= new BGMPlayer();
+            sfxPlayer= new SFXPlayer();
+        } catch (LineUnavailableException e) {
+            throw new RuntimeException(e);
+        }
+
+        presenter = new GamePresenter(gameBoard, this, sfxPlayer);
       flipCardUseCase = new FlipCardUseCase(gameBoard);
       checkForMatchUseCase = new CheckForMatchUseCase(gameBoard);
       controller = new GameController(flipCardUseCase, checkForMatchUseCase, presenter);
@@ -102,10 +115,11 @@ public class GameScreen extends Screen implements CardClickListener, IUIControll
             }});
         gameTimer.start();
 
-        //this button needs to stop the timer, so I didn't use buttonFactory here
+        //this button needs to stop the timer(and sound), so I didn't use buttonFactory here
         StyleButton backButton = new StyleButton("Back to Main Menu");
         backButton.addActionListener(e -> {
             gameTimer.stop();
+            bgmPlayer.stop();
             this.getParentFrame().replaceCurrentScreenWith(new TitleScreen(this.getParentFrame())); });
 
         runInfoPanel.add(moveCountLabel);
@@ -116,6 +130,8 @@ public class GameScreen extends Screen implements CardClickListener, IUIControll
         this.add(cardDeckPanel, BorderLayout.CENTER);
         this.add(runInfoPanel, BorderLayout.SOUTH);
         this.setVisible(true);
+
+        bgmPlayer.playRandom("CCS_BGM");
 
 
     }
@@ -141,6 +157,7 @@ public class GameScreen extends Screen implements CardClickListener, IUIControll
     public void showWinScreen(Score score) {
         SwingUtilities.invokeLater(() -> {
             gameTimer.stop();
+            bgmPlayer.stop();
             getParentFrame().replaceCurrentScreenWith(
                     new WinScreen(getParentFrame(), score)
             );
