@@ -2,12 +2,11 @@ package CardGame.UI.Sound;
 
 import CardGame.InterfaceAdapters.ISoundPlayer;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
+import javax.sound.sampled.*;
 import java.io.File;
 import java.io.InputStream;
-import java.util.Random;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SFXPlayer implements ISoundPlayer {
     private String sfxName;
@@ -15,21 +14,38 @@ public class SFXPlayer implements ISoundPlayer {
     private AudioInputStream audioInputStream;
     private Clip clip;
     private boolean muted = false;
-    @Override
-    public void play(String soundID) {
-        stop();
-
-        String path = "/Sound/SFX/"+soundID+".wav";
+    private final Map<String, Clip> soundMap = new HashMap<>();
+    public SFXPlayer() {
+        load("cardFlip");
+    }
+    private void load(String soundID) {
         try {
+            String path = "/Sound/SFX/" + soundID + ".wav";
             InputStream is = getClass().getResourceAsStream(path);
             AudioInputStream audioStream = AudioSystem.getAudioInputStream(is);
-            clip = AudioSystem.getClip();
+            Clip clip = AudioSystem.getClip();
             clip.open(audioStream);
-            if (!muted) clip.start();
+            setVolume(clip, -1.0f);//slightly below full
+            soundMap.put(soundID, clip);
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    private void setVolume(Clip clip, float dB) {
+        if (clip.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
+            FloatControl gain = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            gain.setValue(dB);
+        }
+    }
+    @Override
+    public void play(String soundID) {
+        if (muted) return;
 
+        Clip clip = soundMap.get(soundID);
+
+            if (clip.isRunning()) clip.stop(); // rewind if needed
+            clip.setFramePosition(0);
+            clip.start();
 
     }
 

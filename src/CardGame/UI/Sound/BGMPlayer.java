@@ -5,7 +5,6 @@ import CardGame.InterfaceAdapters.ISoundPlayer;
 import javax.sound.sampled.*;
 import java.io.File;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.Random;
 
 public class BGMPlayer implements ISoundPlayer {
@@ -27,6 +26,12 @@ public class BGMPlayer implements ISoundPlayer {
         songName = soundID+ index;
         play(songName);
     }
+    private void setVolume(Clip clip, float dB) {
+        if (clip.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
+            FloatControl gain = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            gain.setValue(dB);
+        }
+    }
     @Override
     public void play(String soundID) {
         stop();
@@ -37,6 +42,7 @@ public class BGMPlayer implements ISoundPlayer {
             AudioInputStream audioStream = AudioSystem.getAudioInputStream(is);
             clip = AudioSystem.getClip();
             clip.open(audioStream);
+            setVolume(clip, -10.0f);//smaller than SFX
             clip.loop(Clip.LOOP_CONTINUOUSLY);
             if (!muted) clip.start();
         } catch (Exception e) {

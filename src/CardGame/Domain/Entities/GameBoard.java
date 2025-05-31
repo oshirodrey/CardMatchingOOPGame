@@ -45,8 +45,15 @@ public class GameBoard {
         if(flippedCards.size() == 2){
             Card c1 = flippedCards.get(0);
             Card c2 = flippedCards.get(1);
-            boolean isMatch = c1.getCardName().equals(c2.getCardName());
-            if(isMatch){
+            return c1.getCardName().equals(c2.getCardName());
+        }
+        return false;
+    }
+    public void when2CardsFlipped(){
+        if(flippedCards.size() == 2){
+            Card c1 = flippedCards.get(0);
+            Card c2 = flippedCards.get(1);
+            if(checkForMatch()){
                 c1.setMatched(true);
                 c2.setMatched(true);
             }
@@ -54,11 +61,10 @@ public class GameBoard {
                 c1.flip();
                 c2.flip();//flip back
             }
-            clearFlippedCards();
             moveCount++;
-            return isMatch;
+            clearFlippedCards();
+
         }
-        return false;
     }
     public boolean isAllCardsMatched(){
         for(List<Card> cards : grid){

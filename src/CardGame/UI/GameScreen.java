@@ -65,10 +65,10 @@ public class GameScreen extends Screen implements CardClickListener, IUIControll
             throw new RuntimeException(e);
         }
 
-        presenter = new GamePresenter(gameBoard, this, sfxPlayer);
+        presenter = new GamePresenter(gameBoard, this);
       flipCardUseCase = new FlipCardUseCase(gameBoard);
       checkForMatchUseCase = new CheckForMatchUseCase(gameBoard);
-      controller = new GameController(flipCardUseCase, checkForMatchUseCase, presenter);
+      controller = new GameController(flipCardUseCase, checkForMatchUseCase, presenter,sfxPlayer);
 
     }
 

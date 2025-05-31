@@ -9,7 +9,10 @@ public class CheckForMatchUseCase {
        this.gameBoard = gameBoard;
    }
    public void execute(){
-       gameBoard.checkForMatch();
-       //count moves?
+       gameBoard.when2CardsFlipped();
    }
+   public boolean isMatched(){
+       return gameBoard.checkForMatch();
+   }
+
 }
