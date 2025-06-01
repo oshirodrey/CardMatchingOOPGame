@@ -13,6 +13,7 @@ import CardGame.UI.CustomizedComponents.CardClickListener;
 import CardGame.UI.CustomizedComponents.Screen;
 import CardGame.UI.CustomizedComponents.StyleButton;
 import CardGame.UI.CustomizedComponents.StyleCard;
+import CardGame.UI.Helpers.ButtonFactory;
 import CardGame.UI.Sound.BGMPlayer;
 import CardGame.UI.Sound.SFXPlayer;
 
@@ -114,12 +115,11 @@ public class GameScreen extends Screen implements CardClickListener, IUIControll
             }});
         gameTimer.start();
 
-        //this button needs to stop the timer(and sound), so I didn't use buttonFactory here
-        StyleButton backButton = new StyleButton("Back to Main Menu");
-        backButton.addActionListener(e -> {
+        StyleButton backButton = ButtonFactory.createBackButton(this).onClick(e -> {
             gameTimer.stop();
             bgmPlayer.stop();
-            this.getParentFrame().replaceCurrentScreenWith(new TitleScreen(this.getParentFrame())); });
+            this.getParentFrame().replaceCurrentScreenWith(new TitleScreen(this.getParentFrame())); }).build();
+
 
         runInfoPanel.add(moveCountLabel);
         runInfoPanel.add(timePassedLabel);

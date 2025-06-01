@@ -62,8 +62,8 @@ public class WinScreen extends Screen {
         JPanel buttonContainer = new JPanel();
         buttonContainer.setLayout(new BoxLayout(buttonContainer, BoxLayout.Y_AXIS));
         buttonContainer.setBackground(customPink);
-        StyleButton leaderBoardButton = ButtonFactory.createLeaderBoardButton("Leader Board", this);
-        StyleButton backButton = ButtonFactory.createBackButton("Back to Main Menu", this);
+        StyleButton leaderBoardButton = ButtonFactory.createLeaderBoardButton( this).build();
+        StyleButton backButton = ButtonFactory.createBackButton( this).build();
         buttonContainer.add(leaderBoardButton);
         buttonContainer.add(backButton);
 

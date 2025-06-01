@@ -1,44 +1,40 @@
 package CardGame.UI.Helpers;
 
 import CardGame.UI.CustomizedComponents.Screen;
-import CardGame.UI.CustomizedComponents.StyleButton;
 import CardGame.UI.GameRuleScreen;
 import CardGame.UI.GameScreen;
 import CardGame.UI.LeaderBoardScreen;
 import CardGame.UI.TitleScreen;
 
-import java.awt.*;
-
 public class ButtonFactory {
-    public static StyleButton createBackButton(String text, Screen screen) {
-        StyleButton button = new StyleButton(text);
-        button.setAlignmentX(Component.CENTER_ALIGNMENT);
-        button.addActionListener(e -> screen.getParentFrame().replaceCurrentScreenWith(new TitleScreen(screen.getParentFrame())));
-        return button;
-    }
-    public static StyleButton createStartGameButton(String text, Screen screen) {
-        StyleButton button = new StyleButton(text);
-        button.setAlignmentX(Component.CENTER_ALIGNMENT);
-        button.addActionListener(e -> screen.getParentFrame().replaceCurrentScreenWith(new GameScreen()));
-        return button;
-    }
-    public static StyleButton createExitButton(String text, Screen screen) {
-        StyleButton button = new StyleButton(text);
-        button.setAlignmentX(Component.CENTER_ALIGNMENT);
-        button.addActionListener(e -> System.exit(0));
-        return button;
-    }
-    public static StyleButton createRuleButton(String text, Screen screen) {
-        StyleButton button = new StyleButton(text);
-        button.setAlignmentX(Component.CENTER_ALIGNMENT);
-        button.addActionListener(e -> screen.getParentFrame().replaceCurrentScreenWith(new GameRuleScreen(screen.getParentFrame())));
-        return button;
-    }
-    public static StyleButton createLeaderBoardButton(String text, Screen screen) {
-        StyleButton button = new StyleButton(text);
-        button.setAlignmentX(Component.CENTER_ALIGNMENT);
-        button.addActionListener(e-> screen.getParentFrame().replaceCurrentScreenWith(new LeaderBoardScreen()));
-        return button;
+    public static ButtonBuilder createBackButton(Screen screen) {
+        return new ButtonBuilder(" Back to Main Menu ")
+                .onClick(e -> screen.getParentFrame().replaceCurrentScreenWith(new TitleScreen(screen.getParentFrame())));
     }
 
+    public static ButtonBuilder createStartGameButton(Screen screen) {
+        return new ButtonBuilder(" Start Game ")
+                .onClick(e -> screen.getParentFrame().replaceCurrentScreenWith(new GameScreen()));
+    }
+
+    public static ButtonBuilder createCustomStartGameButton(Screen screen,String text) {
+        return new ButtonBuilder(text)
+                .onClick(e -> screen.getParentFrame().replaceCurrentScreenWith(new GameScreen()));
+    }
+
+    public static ButtonBuilder createExitButton() {
+        return new ButtonBuilder(" Exit ")
+                .onClick(e -> System.exit(0));
+    }
+
+    public static ButtonBuilder createRuleButton(Screen screen) {
+        return new ButtonBuilder(" Rules ")
+                .onClick(e -> screen.getParentFrame().replaceCurrentScreenWith(new GameRuleScreen(screen.getParentFrame())));
+    }
+
+    public static ButtonBuilder createLeaderBoardButton(Screen screen) {
+        return new ButtonBuilder(" Leaderboard ")
+                .onClick(e -> screen.getParentFrame().replaceCurrentScreenWith(new LeaderBoardScreen()));
+    }
 }
+

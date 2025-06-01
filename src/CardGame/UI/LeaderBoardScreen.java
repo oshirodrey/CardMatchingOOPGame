@@ -51,9 +51,9 @@ public class LeaderBoardScreen extends Screen {
         buttonContainer.setLayout(new BoxLayout(buttonContainer, BoxLayout.Y_AXIS));
         buttonContainer.setBackground(customPink);
 
-        StyleButton playButton = ButtonFactory.createStartGameButton("Time to make history", this);
-        StyleButton rulesButton = ButtonFactory.createRuleButton("Rules", this);
-        StyleButton backButton = ButtonFactory.createBackButton("Back to Main Menu", this);
+        StyleButton playButton = ButtonFactory.createCustomStartGameButton(this," Time to make history ").build();
+        StyleButton rulesButton = ButtonFactory.createRuleButton(this).build();
+        StyleButton backButton = ButtonFactory.createBackButton(this).build();
 
         buttonContainer.add(playButton);
         buttonContainer.add(rulesButton);

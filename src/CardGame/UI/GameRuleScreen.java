@@ -2,9 +2,11 @@ package CardGame.UI;
 
 import CardGame.UI.CustomizedComponents.Screen;
 import CardGame.UI.CustomizedComponents.StyleButton;
+import CardGame.UI.Helpers.ButtonFactory;
 
 import javax.swing.*;
 import java.awt.*;
+import java.text.AttributedString;
 
 public class GameRuleScreen extends Screen {
     public GameRuleScreen(MainFrame parentFrame) {
@@ -39,16 +41,9 @@ public class GameRuleScreen extends Screen {
         buttonContainer.setBackground(customPink);
         buttonContainer.setLayout(new BoxLayout(buttonContainer, BoxLayout.Y_AXIS));
 
-        StyleButton startButton = new StyleButton("Start Game");
-        StyleButton backButton = new StyleButton("Back to Main Menu");
+        StyleButton startButton = ButtonFactory.createStartGameButton(this).build();
+        StyleButton backButton = ButtonFactory.createBackButton(this).build();
 
-
-        startButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        backButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-
-        startButton.addActionListener(e -> this.getParentFrame().replaceCurrentScreenWith(new GameScreen()));
-        backButton.addActionListener(e -> this.getParentFrame().replaceCurrentScreenWith(new TitleScreen(this.getParentFrame())));
 
 
 

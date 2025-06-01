@@ -29,7 +29,6 @@ public class TitleScreen extends Screen {
     public void init() {
         this.getParentFrame().setSize(800,600);
         this.setLayout(new BorderLayout());
-        this.setBackground(customPink);
 
         Image gameImg = new ImageIcon(getClass().getResource("/Game/gameIcon.png")).getImage();
         ImageIcon gameIcon = new ImageIcon(gameImg.getScaledInstance(200,200,java.awt.Image.SCALE_SMOOTH));
@@ -42,15 +41,17 @@ public class TitleScreen extends Screen {
 
         JPanel buttonContainer = new JPanel();
         buttonContainer.setOpaque(false);
-        buttonContainer.setBackground(customPink);
         buttonContainer.setLayout(new BoxLayout(buttonContainer, BoxLayout.Y_AXIS));
 
+        //custom button color
+        Color initButtonColor = new Color(255,175,204);
+        Color hoverButtonColor = new Color(253, 143, 144);
         //create buttons
-        StyleButton startButton = ButtonFactory.createStartGameButton(" Start Game ",this);
+        StyleButton startButton = ButtonFactory.createStartGameButton(this).initAndHoverColor(initButtonColor,hoverButtonColor).build();
         startButton.setEnabled(false);//temporarily disable this button for background loading
-        StyleButton gameRuleButton = ButtonFactory.createRuleButton(" Rule ", this);
-        StyleButton leaderBoardButton = ButtonFactory.createLeaderBoardButton(" Leaderboard ",this);
-        StyleButton exitButton = ButtonFactory.createExitButton(" Exit Game ",this);
+        StyleButton gameRuleButton = ButtonFactory.createRuleButton( this).initAndHoverColor(initButtonColor,hoverButtonColor).build();
+        StyleButton leaderBoardButton = ButtonFactory.createLeaderBoardButton(this).initAndHoverColor(initButtonColor,hoverButtonColor).build();
+        StyleButton exitButton = ButtonFactory.createExitButton().initAndHoverColor(initButtonColor,hoverButtonColor).build();
 
         buttonContainer.add(startButton);
         buttonContainer.add(gameRuleButton);
@@ -82,4 +83,15 @@ public class TitleScreen extends Screen {
         };
         loader.execute();
     }
+    @Override
+    protected void paintComponent(Graphics g) { // for gradient background and animation
+        super.paintComponent(g);
+        Graphics2D g2d = (Graphics2D) g;
+        GradientPaint gp = new GradientPaint(
+                getWidth()/2, 0, new Color( 123, 173, 255), // Top
+                getWidth()/2, getHeight(), new Color( 222, 239, 255)); // Bottom
+        g2d.setPaint(gp);
+        g2d.fillRect(0, 0, getWidth(), getHeight());
+    }
+
 }

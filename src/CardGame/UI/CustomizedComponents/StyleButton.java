@@ -54,4 +54,11 @@ public class StyleButton extends JButton implements MouseListener {
         this.setText(text);
 
     }
+
+    public void setInitAndHoverColor(Color initColor,Color hoverColor) {
+        this.initColor = initColor;
+        this.hoverColor = hoverColor;
+        this.setForeground(initColor);
+    }
+
 }
