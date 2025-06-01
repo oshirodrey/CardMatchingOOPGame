@@ -5,18 +5,23 @@ import CardGame.UI.CustomizedComponents.StyleButton;
 import CardGame.UI.Helpers.ButtonFactory;
 import CardGame.UI.Helpers.FontHelper;
 import CardGame.UI.Helpers.ImageCache;
+import CardGame.UI.Sound.BGMPlayer;
 
+import javax.sound.sampled.LineUnavailableException;
 import javax.swing.*;
 import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
 
 public class TitleScreen extends Screen {
-
     public TitleScreen(MainFrame frame) {
 
         setParentFrame(frame);
-
+        try {
+            bgmPlayer = new BGMPlayer();
+        } catch (LineUnavailableException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
@@ -55,7 +60,11 @@ public class TitleScreen extends Screen {
         this.add(gameIconLabel, BorderLayout.NORTH);
         this.add(gameTitle, BorderLayout.CENTER);
         this.add(buttonContainer, BorderLayout.SOUTH);
+
+        bgmPlayer.play("CCS_BGM6");
         preloadImagesInBackground(startButton);
+
+
     }
     private void preloadImagesInBackground(JButton startButton) {
         SwingWorker<Void, Void> loader = new SwingWorker<>() {

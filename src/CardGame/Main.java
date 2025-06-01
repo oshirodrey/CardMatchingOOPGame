@@ -22,6 +22,7 @@ public class Main {
 //        win.init();
 //        win.setVisible(true);
         frame.add(ts);
+        frame.setCurrentScreen(ts);
         frame.setVisible(true);
     }
 }

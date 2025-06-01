@@ -39,8 +39,7 @@ public class GameScreen extends Screen implements CardClickListener, IUIControll
     private List<StyleCard> displayCardDeck;
     private JLabel moveCountLabel;
     private JLabel timePassedLabel;
-    private BGMPlayer bgmPlayer;
-    private SFXPlayer sfxPlayer;
+
 
     // =================== ⏱ Game Flow Utilities ===================
     private Timer gameTimer;

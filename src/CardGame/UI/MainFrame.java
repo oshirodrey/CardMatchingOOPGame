@@ -27,7 +27,10 @@ public class MainFrame extends JFrame {
         }
 
         public void replaceCurrentScreenWith(Screen anotherScreen) {
-            Screen currentOngoingScreen = getCurrentScreen();
+            if (this.getCurrentScreen() != null) {
+                this.getCurrentScreen().onExit(); // stop music etc.
+
+            }
             this.getContentPane().invalidate();
             this.getContentPane().removeAll();
 
@@ -41,8 +44,7 @@ public class MainFrame extends JFrame {
             anotherScreen.setParentFrame(this);
             anotherScreen.init();
         }
-        public Screen getCurrentScreen() {
-        return this.currentScreen;}
+        public Screen getCurrentScreen() {return this.currentScreen;}
         public void setCurrentScreen(Screen currentScreen) {
             this.currentScreen = currentScreen;
         }

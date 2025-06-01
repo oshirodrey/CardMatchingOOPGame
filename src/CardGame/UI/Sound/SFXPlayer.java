@@ -16,8 +16,10 @@ public class SFXPlayer implements ISoundPlayer {
     private boolean muted = false;
     private final Map<String, Clip> soundMap = new HashMap<>();
     public SFXPlayer() {
+
         load("cardFlip");
     }
+
     private void load(String soundID) {
         try {
             String path = "/Sound/SFX/" + soundID + ".wav";
