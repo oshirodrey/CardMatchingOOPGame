@@ -13,7 +13,7 @@ public class ButtonFactory {
     }
 
     public static ButtonBuilder createStartGameButton(Screen screen) {
-        return new ButtonBuilder(" Start Game ")
+        return new ButtonBuilder(" START GAME ")
                 .onClick(e -> screen.getParentFrame().replaceCurrentScreenWith(new GameScreen()));
     }
 
@@ -23,17 +23,17 @@ public class ButtonFactory {
     }
 
     public static ButtonBuilder createExitButton() {
-        return new ButtonBuilder(" Exit ")
+        return new ButtonBuilder(" EXIT ")
                 .onClick(e -> System.exit(0));
     }
 
     public static ButtonBuilder createRuleButton(Screen screen) {
-        return new ButtonBuilder(" Rules ")
+        return new ButtonBuilder(" RULES ")
                 .onClick(e -> screen.getParentFrame().replaceCurrentScreenWith(new GameRuleScreen(screen.getParentFrame())));
     }
 
     public static ButtonBuilder createLeaderBoardButton(Screen screen) {
-        return new ButtonBuilder(" Leaderboard ")
+        return new ButtonBuilder(" LEADERBOARD ")
                 .onClick(e -> screen.getParentFrame().replaceCurrentScreenWith(new LeaderBoardScreen()));
     }
 }

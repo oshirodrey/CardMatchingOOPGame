@@ -22,7 +22,7 @@ public class BGMPlayer implements ISoundPlayer {
         if(muted) return;
         stop();
 
-        int index = rand.nextInt(5)+1;
+        int index = rand.nextInt(6)+1;
         songName = soundID+ index;
         play(songName);
     }

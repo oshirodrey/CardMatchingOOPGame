@@ -31,4 +31,12 @@ public class ImageCache {
         }
         return cache.get(cardName);
     }
+    public static ImageIcon loadGIFImage(String GIFName) {
+        if (!cache.containsKey(GIFName)) {
+            Image img = new ImageIcon(ImageCache.class.getResource("/Game/GIF/" + GIFName + ".gif"))
+                    .getImage();
+            cache.put(GIFName, new ImageIcon(img));
+        }
+        return cache.get(GIFName);
+    }
 }

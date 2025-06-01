@@ -10,8 +10,8 @@ import java.awt.event.MouseListener;
 public class StyleButton extends JButton implements MouseListener {
     private Color initColor = new Color(255, 250, 240);
     private Color hoverColor = new Color(254, 241, 230);
-    private Font initFont = FontHelper.get("Shardee",40f);
-    private Font hoverFont= FontHelper.get("Shardee",42f);
+    private Font initFont = FontHelper.get("FuturaAgMiteOpti-Six",30f);
+    private Font hoverFont= FontHelper.get("OPTIFuturaDemiBold",30f);
     private String text;
     public StyleButton(String text) {
         this.setText(text);

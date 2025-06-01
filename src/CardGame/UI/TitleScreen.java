@@ -1,5 +1,6 @@
 package CardGame.UI;
 
+import CardGame.UI.CustomizedComponents.OutlinedLabel;
 import CardGame.UI.CustomizedComponents.Screen;
 import CardGame.UI.CustomizedComponents.StyleButton;
 import CardGame.UI.Helpers.ButtonFactory;
@@ -27,45 +28,74 @@ public class TitleScreen extends Screen {
 
     @Override
     public void init() {
-        this.getParentFrame().setSize(800,600);
-        this.setLayout(new BorderLayout());
+        this.getParentFrame().setSize(800, 600);
 
-        Image gameImg = new ImageIcon(getClass().getResource("/Game/gameIcon.png")).getImage();
-        ImageIcon gameIcon = new ImageIcon(gameImg.getScaledInstance(200,200,java.awt.Image.SCALE_SMOOTH));
+        // GIF background
+        ImageIcon background = ImageCache.loadGIFImage("sakuraBG3");
+        JLabel backgroundLabel = new JLabel(background);
+        backgroundLabel.setBounds(0, 0, background.getIconWidth(), background.getIconHeight());
 
-        JLabel gameIconLabel = new JLabel(gameIcon);
-        JLabel gameTitle = new JLabel("Matching Card");
-        gameTitle.setFont(FontHelper.get("Althea-Bold",70f));
-        gameTitle.setHorizontalAlignment(SwingConstants.CENTER);
+        // Create panel for content (with layout)
+        JPanel contentPanel = new JPanel(new BorderLayout());
+        contentPanel.setOpaque(false); // Let background show through
+        contentPanel.setBounds(0, 0, 800, 570);
 
+        // Title label
+        Font f = FontHelper.get("GarbataTrial-ExtraboldItalic", 60f);
+        OutlinedLabel titleLine1 = new OutlinedLabel("Sakura", f,
+                new Color(217, 69, 107),new Color(255, 248, 220));
+        titleLine1.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+        Font f1 = FontHelper.get("GarbataTrial-ExtraboldItalic", 40f);
+        OutlinedLabel titleLine2 = new OutlinedLabel("Card Matching", f1,
+                new Color(217, 69, 107),new Color(255, 248, 220));
+        titleLine2.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JPanel titlePanel = new JPanel();
+        titlePanel.setOpaque(false); // Keep background transparent
+        titlePanel.setLayout(new BoxLayout(titlePanel, BoxLayout.Y_AXIS));
+
+    // Add vertical spacing manually
+        titlePanel.add(Box.createVerticalStrut(-10)); // space above icon
+        titlePanel.add(titleLine1);
+        titlePanel.add(Box.createVerticalStrut(-80)); // reduce spacing between 2 titles
+        titlePanel.add(titleLine2);
+        titlePanel.add(Box.createVerticalGlue());
+
+        // Buttons
         JPanel buttonContainer = new JPanel();
         buttonContainer.setOpaque(false);
         buttonContainer.setLayout(new BoxLayout(buttonContainer, BoxLayout.Y_AXIS));
 
-        //custom button color
-        Color initButtonColor = new Color(255,175,204);
-        Color hoverButtonColor = new Color(253, 143, 144);
-        //create buttons
-        StyleButton startButton = ButtonFactory.createStartGameButton(this).initAndHoverColor(initButtonColor,hoverButtonColor).build();
-        startButton.setEnabled(false);//temporarily disable this button for background loading
-        StyleButton gameRuleButton = ButtonFactory.createRuleButton( this).initAndHoverColor(initButtonColor,hoverButtonColor).build();
-        StyleButton leaderBoardButton = ButtonFactory.createLeaderBoardButton(this).initAndHoverColor(initButtonColor,hoverButtonColor).build();
-        StyleButton exitButton = ButtonFactory.createExitButton().initAndHoverColor(initButtonColor,hoverButtonColor).build();
+        Color initColor = new Color(255, 248, 220);
+        Color hoverColor = new Color(255,200,221);
+
+        StyleButton startButton = ButtonFactory.createStartGameButton(this).initAndHoverColor(initColor, hoverColor).build();
+        startButton.setEnabled(false);
+        StyleButton gameRuleButton = ButtonFactory.createRuleButton(this).initAndHoverColor(initColor, hoverColor).build();
+        StyleButton leaderBoardButton = ButtonFactory.createLeaderBoardButton(this).initAndHoverColor(initColor, hoverColor).build();
+        StyleButton exitButton = ButtonFactory.createExitButton().initAndHoverColor(initColor, hoverColor).build();
 
         buttonContainer.add(startButton);
         buttonContainer.add(gameRuleButton);
         buttonContainer.add(leaderBoardButton);
         buttonContainer.add(exitButton);
 
-        this.add(gameIconLabel, BorderLayout.NORTH);
-        this.add(gameTitle, BorderLayout.CENTER);
-        this.add(buttonContainer, BorderLayout.SOUTH);
+        contentPanel.add(titlePanel, BorderLayout.CENTER);
+        contentPanel.add(buttonContainer, BorderLayout.SOUTH);
 
-        bgmPlayer.play("CCS_BGM6");
+        // Use JLayeredPane to layer background + content
+        JLayeredPane layeredPane = new JLayeredPane();
+        layeredPane.setPreferredSize(new Dimension(800, 600));
+        layeredPane.add(backgroundLabel, JLayeredPane.DEFAULT_LAYER);
+        layeredPane.add(contentPanel, JLayeredPane.PALETTE_LAYER); // on top
+
+        // Add to this screen
+        this.setLayout(new BorderLayout());
+        this.add(layeredPane, BorderLayout.CENTER);
+
+        bgmPlayer.play("CCS_BGM7");
         preloadImagesInBackground(startButton);
-
-
     }
     private void preloadImagesInBackground(JButton startButton) {
         SwingWorker<Void, Void> loader = new SwingWorker<>() {
@@ -82,16 +112,6 @@ public class TitleScreen extends Screen {
             }
         };
         loader.execute();
-    }
-    @Override
-    protected void paintComponent(Graphics g) { // for gradient background and animation
-        super.paintComponent(g);
-        Graphics2D g2d = (Graphics2D) g;
-        GradientPaint gp = new GradientPaint(
-                getWidth()/2, 0, new Color( 123, 173, 255), // Top
-                getWidth()/2, getHeight(), new Color( 222, 239, 255)); // Bottom
-        g2d.setPaint(gp);
-        g2d.fillRect(0, 0, getWidth(), getHeight());
     }
 
 }
