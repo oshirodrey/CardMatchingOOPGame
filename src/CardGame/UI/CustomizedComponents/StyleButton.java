@@ -1,6 +1,7 @@
 package CardGame.UI.CustomizedComponents;
 
 import CardGame.UI.Helpers.FontHelper;
+import CardGame.UI.Sound.SFXPlayer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,6 +14,7 @@ public class StyleButton extends JButton implements MouseListener {
     private Font initFont = FontHelper.get("FuturaAgMiteOpti-Six",30f);
     private Font hoverFont= FontHelper.get("OPTIFuturaDemiBold",30f);
     private String text;
+    private SFXPlayer sfxPlayer;
     public StyleButton(String text) {
         this.setText(text);
         this.setForeground(initColor);
@@ -22,6 +24,7 @@ public class StyleButton extends JButton implements MouseListener {
         this.setContentAreaFilled(false);
         this.addMouseListener(this);
         this.text=text;
+        sfxPlayer=new SFXPlayer();
 
     }
 
@@ -32,7 +35,7 @@ public class StyleButton extends JButton implements MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-
+        sfxPlayer.play("clickButton");
     }
 
     @Override

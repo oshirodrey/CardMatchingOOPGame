@@ -8,7 +8,7 @@ import CardGame.UI.TitleScreen;
 
 public class ButtonFactory {
     public static ButtonBuilder createBackButton(Screen screen) {
-        return new ButtonBuilder(" Back to Main Menu ")
+        return new ButtonBuilder(" BACK TO MAIN MENU ")
                 .onClick(e -> screen.getParentFrame().replaceCurrentScreenWith(new TitleScreen(screen.getParentFrame())));
     }
 

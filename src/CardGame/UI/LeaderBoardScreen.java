@@ -7,7 +7,9 @@ import CardGame.Infrastructure.Persistence.FileScoreRepository;
 import CardGame.UI.CustomizedComponents.Screen;
 import CardGame.UI.CustomizedComponents.StyleButton;
 import CardGame.UI.Helpers.ButtonFactory;
+import CardGame.UI.Sound.BGMPlayer;
 
+import javax.sound.sampled.LineUnavailableException;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
@@ -22,6 +24,11 @@ public class LeaderBoardScreen extends Screen {
     public LeaderBoardScreen() {
         scoreRepository = new FileScoreRepository();
         loadScoresUseCase = new LoadScoresUseCase(scoreRepository);
+        try {
+            bgmPlayer = new BGMPlayer();
+        } catch (LineUnavailableException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -36,8 +43,8 @@ public class LeaderBoardScreen extends Screen {
         mainPanel.setBackground(customPink);
 
 
-        JLabel title = new JLabel("🏆 Leaderboard");
-        title.setFont(new Font("SansSerif", Font.BOLD, 32));
+        JLabel title = new JLabel("🏆 LEADERBOARD 🏆");
+        title.setFont(new Font("Segoe UI Symbol", Font.BOLD, 32));
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         JScrollPane table = createScoreTable();
 
@@ -62,6 +69,8 @@ public class LeaderBoardScreen extends Screen {
 
         this.add(buttonContainer, BorderLayout.SOUTH);
         this.add(mainPanel, BorderLayout.CENTER);
+
+        bgmPlayer.play("CCS_BGM4");
 
 
 

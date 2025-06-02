@@ -18,6 +18,7 @@ public class SFXPlayer implements ISoundPlayer {
     public SFXPlayer() {
 
         load("cardFlip");
+        load("clickButton");
     }
 
     private void load(String soundID) {
