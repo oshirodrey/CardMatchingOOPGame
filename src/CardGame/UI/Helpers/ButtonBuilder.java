@@ -21,6 +21,10 @@ public class ButtonBuilder {
         button.setText(text);
         return this;
     }
+    public ButtonBuilder fontSize(float size) {
+        button.setFontSize(size);
+        return this;
+    }
 
     public ButtonBuilder initAndHoverColor(Color initColor, Color hoverColor) {
         button.setInitAndHoverColor(initColor, hoverColor);

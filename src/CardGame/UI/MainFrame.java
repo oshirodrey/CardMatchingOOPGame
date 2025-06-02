@@ -28,10 +28,7 @@ public class MainFrame extends JFrame {
         }
 
         public void replaceCurrentScreenWith(Screen anotherScreen) {
-            if (this.getCurrentScreen() != null) {
-                this.getCurrentScreen().onExit(); // stop music etc.
-
-            }
+            this.getCurrentScreen().onExit(); // stop music etc.
             this.getContentPane().invalidate();
             this.getContentPane().removeAll();
 

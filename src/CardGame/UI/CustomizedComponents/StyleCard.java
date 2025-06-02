@@ -32,7 +32,8 @@ public class StyleCard extends JButton implements MouseListener {
     public void init(){
         this.setPreferredSize(new Dimension(cardWidth,cardHeight));
         this.setOpaque(false);
-        this.setBorder(null);
+        this.setMargin(new Insets(0, 0, 0, 0)); // No padding inside the button
+        this.setBorder(BorderFactory.createEmptyBorder());   // No border
         this.setContentAreaFilled(false);
         this.setIcon(cardBack);
         this.setFocusable(false);

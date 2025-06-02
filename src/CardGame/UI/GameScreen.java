@@ -87,83 +87,77 @@ public class GameScreen extends Screen implements CardClickListener, IUIControll
 
     @Override
     public void init() {
-        this.getParentFrame().setSize(new Dimension(900, 800));
-        this.setLayout(new BorderLayout());
-        this.setBackground(customPink);
+        this.getParentFrame().setSize(new Dimension(1000, 800));
+
+        // === GIF Background ===
+        ImageIcon background = ImageCache.loadGIFImage("sakuraBG4");
+        JLabel backgroundLabel = new JLabel(background);
+        backgroundLabel.setBounds(0, 0, background.getIconWidth(), background.getIconHeight());
+
+        // === Transparent Content Panel with BorderLayout ===
+        JPanel contentPanel = new JPanel(new BorderLayout());
+        contentPanel.setOpaque(false);
+        contentPanel.setBounds(0, 0, 1000, 765); // Match frame size
+
+        // === CENTER Panel For Cards ===
         this.displayCardDeck = displayCards();
-        // === LEFT Image Panel ===
-        JPanel leftImagePanel = new JPanel();
-        leftImagePanel.setLayout(new BoxLayout(leftImagePanel, BoxLayout.Y_AXIS));
-        for (int i = 1; i <= 3; i++) {
-            JLabel imageLabel = new JLabel(ImageCache.loadGIFImage("left" + i));
-            imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-            leftImagePanel.add(imageLabel);
-            leftImagePanel.add(Box.createVerticalStrut(10)); // spacing
-        }
-        // === RIGHT Image Panel ===
-        JPanel rightImagePanel = new JPanel();
-        rightImagePanel.setLayout(new BoxLayout(rightImagePanel, BoxLayout.Y_AXIS));
-        for (int i = 1; i <= 3; i++) {
-            JLabel imageLabel= new JLabel();
-            if(i==2){
-                imageLabel = new JLabel(ImageCache.loadPNGImage("right" + i,200,250));
-            }
-            else{
-                imageLabel = new JLabel(ImageCache.loadGIFImage("right" + i));
-            }
-            imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-            rightImagePanel.add(imageLabel);
-            rightImagePanel.add(Box.createVerticalStrut(10)); // spacing
-        }
-        // === Add to Main Panel ===
-        leftImagePanel.setOpaque(false);
-        rightImagePanel.setOpaque(false);
-        this.add(leftImagePanel, BorderLayout.WEST);
-        this.add(rightImagePanel, BorderLayout.EAST);
-
-        //=== CENTER Panel For Cards ===
-        JPanel cardDeckPanel = new JPanel();
+        JPanel cardDeckPanel = new JPanel(new GridBagLayout());
         cardDeckPanel.setOpaque(false);
-        cardDeckPanel.setLayout(new GridLayout(rows,cols));
-        for (StyleCard card : displayCardDeck) {
-            cardDeckPanel.add(card);
-        }
 
-        //STORE THE RUN'S INFORMATION
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(2, 5, 2, 5);  // Small gap between cards
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.fill = GridBagConstraints.NONE;
+
+        int index = 0;
+        for (int r = 0; r < rows; r++) {
+            for (int c = 0; c < cols; c++) {
+                if (index >= displayCardDeck.size()) break;
+                StyleCard card = displayCardDeck.get(index++);
+
+                gbc.gridx = c;
+                gbc.gridy = r;
+                cardDeckPanel.add(card, gbc);
+            }
+        }
+        // === Run Info Panel (Bottom) ===
         JPanel runInfoPanel = new JPanel();
         runInfoPanel.setOpaque(false);
-        runInfoPanel.setLayout(new BoxLayout(runInfoPanel,BoxLayout.X_AXIS));
-
-
-       moveCountLabel = new JLabel("Move: 0");
-       timePassedLabel = new JLabel("     Time Passed: 0 second" );
-
-
-        // Timer that ticks every 100 milliseconds
-        this.gameTimer = new Timer(100, new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                presenter.presentStatus();
-            }});
-        gameTimer.start();
-
-        StyleButton backButton = ButtonFactory.createBackButton(this).onClick(e -> {
-            gameTimer.stop();
-            bgmPlayer.stop();
-            this.getParentFrame().replaceCurrentScreenWith(new TitleScreen(this.getParentFrame())); }).build();
-
-
+        runInfoPanel.setLayout(new BoxLayout(runInfoPanel, BoxLayout.X_AXIS));
+        moveCountLabel = new JLabel("Move: 0");
+        timePassedLabel = new JLabel("     Time Passed: 0 second");
         runInfoPanel.add(moveCountLabel);
         runInfoPanel.add(timePassedLabel);
 
+        // === Back Button (Top) ===
+        StyleButton backButton = ButtonFactory.createBackButton(this).onClick(e -> {
+            gameTimer.stop();
+            bgmPlayer.stop();
+            this.getParentFrame().replaceCurrentScreenWith(new TitleScreen(this.getParentFrame()));
+        }).fontSize(25f).build();
 
-        this.add(backButton, BorderLayout.NORTH);
-        this.add(cardDeckPanel, BorderLayout.CENTER);
-        this.add(runInfoPanel, BorderLayout.SOUTH);
+        // === Game Timer Setup ===
+        this.gameTimer = new Timer(100, e -> presenter.presentStatus());
+        gameTimer.start();
+
+        // === Add All Panels to Transparent contentPanel ===
+        contentPanel.add(backButton, BorderLayout.NORTH);
+        contentPanel.add(cardDeckPanel, BorderLayout.CENTER);
+        contentPanel.add(runInfoPanel, BorderLayout.SOUTH);
+
+        // === Layered Pane for Background and Content ===
+        JLayeredPane layeredPane = new JLayeredPane();
+        layeredPane.setPreferredSize(new Dimension(1000, 800));
+        layeredPane.add(backgroundLabel, JLayeredPane.DEFAULT_LAYER);
+        layeredPane.add(contentPanel, JLayeredPane.PALETTE_LAYER);
+
+        // === Add to Main Panel ===
+        this.setLayout(new BorderLayout());
+        this.add(layeredPane, BorderLayout.CENTER);
         this.setVisible(true);
 
+        // === Play Music ===
         bgmPlayer.playRandom("CCS_BGM");
-
-
     }
 
     @Override
@@ -193,17 +187,6 @@ public class GameScreen extends Screen implements CardClickListener, IUIControll
             );
         });
     }
-    @Override
-    protected void paintComponent(Graphics g) { // for gradient background and animation
-        super.paintComponent(g);
-        Graphics2D g2d = (Graphics2D) g;
-        GradientPaint gp = new GradientPaint(
-                getWidth(), 0, customPink, // Top
-                0, getHeight(), customBlue); // Bottom
-        g2d.setPaint(gp);
-        g2d.fillRect(0, 0, getWidth(), getHeight());
-    }
-
 }
 
 
