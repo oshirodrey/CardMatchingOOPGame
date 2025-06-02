@@ -14,6 +14,7 @@ import CardGame.UI.CustomizedComponents.Screen;
 import CardGame.UI.CustomizedComponents.StyleButton;
 import CardGame.UI.CustomizedComponents.StyleCard;
 import CardGame.UI.Helpers.ButtonFactory;
+import CardGame.UI.Helpers.ImageCache;
 import CardGame.UI.Sound.BGMPlayer;
 import CardGame.UI.Sound.SFXPlayer;
 
@@ -90,9 +91,39 @@ public class GameScreen extends Screen implements CardClickListener, IUIControll
         this.setLayout(new BorderLayout());
         this.setBackground(customPink);
         this.displayCardDeck = displayCards();
+        // === LEFT Image Panel ===
+        JPanel leftImagePanel = new JPanel();
+        leftImagePanel.setLayout(new BoxLayout(leftImagePanel, BoxLayout.Y_AXIS));
+        for (int i = 1; i <= 3; i++) {
+            JLabel imageLabel = new JLabel(ImageCache.loadGIFImage("left" + i));
+            imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+            leftImagePanel.add(imageLabel);
+            leftImagePanel.add(Box.createVerticalStrut(10)); // spacing
+        }
+        // === RIGHT Image Panel ===
+        JPanel rightImagePanel = new JPanel();
+        rightImagePanel.setLayout(new BoxLayout(rightImagePanel, BoxLayout.Y_AXIS));
+        for (int i = 1; i <= 3; i++) {
+            JLabel imageLabel= new JLabel();
+            if(i==2){
+                imageLabel = new JLabel(ImageCache.loadPNGImage("right" + i,200,250));
+            }
+            else{
+                imageLabel = new JLabel(ImageCache.loadGIFImage("right" + i));
+            }
+            imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+            rightImagePanel.add(imageLabel);
+            rightImagePanel.add(Box.createVerticalStrut(10)); // spacing
+        }
+        // === Add to Main Panel ===
+        leftImagePanel.setOpaque(false);
+        rightImagePanel.setOpaque(false);
+        this.add(leftImagePanel, BorderLayout.WEST);
+        this.add(rightImagePanel, BorderLayout.EAST);
 
+        //=== CENTER Panel For Cards ===
         JPanel cardDeckPanel = new JPanel();
-        cardDeckPanel.setBackground(customPink);
+        cardDeckPanel.setOpaque(false);
         cardDeckPanel.setLayout(new GridLayout(rows,cols));
         for (StyleCard card : displayCardDeck) {
             cardDeckPanel.add(card);
@@ -100,7 +131,7 @@ public class GameScreen extends Screen implements CardClickListener, IUIControll
 
         //STORE THE RUN'S INFORMATION
         JPanel runInfoPanel = new JPanel();
-        runInfoPanel.setBackground(customPink);
+        runInfoPanel.setOpaque(false);
         runInfoPanel.setLayout(new BoxLayout(runInfoPanel,BoxLayout.X_AXIS));
 
 
@@ -162,5 +193,17 @@ public class GameScreen extends Screen implements CardClickListener, IUIControll
             );
         });
     }
+    @Override
+    protected void paintComponent(Graphics g) { // for gradient background and animation
+        super.paintComponent(g);
+        Graphics2D g2d = (Graphics2D) g;
+        GradientPaint gp = new GradientPaint(
+                getWidth(), 0, customPink, // Top
+                0, getHeight(), customBlue); // Bottom
+        g2d.setPaint(gp);
+        g2d.fillRect(0, 0, getWidth(), getHeight());
+    }
 
 }
+
+

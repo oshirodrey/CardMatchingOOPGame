@@ -39,4 +39,14 @@ public class ImageCache {
         }
         return cache.get(GIFName);
     }
+
+    public static ImageIcon loadPNGImage(String imageName, int width, int height) {
+        if (!cache.containsKey(imageName)) {
+            Image img = new ImageIcon(ImageCache.class.getResource("/Game/" + imageName + ".png"))
+                    .getImage()
+                    .getScaledInstance(width, height, Image.SCALE_SMOOTH);
+            cache.put(imageName, new ImageIcon(img));
+        }
+        return cache.get(imageName);
+    }
 }
