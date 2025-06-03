@@ -2,7 +2,7 @@ package CardGame.UI.CustomizedComponents;
 
 
 public interface CardClickListener {
-    public void onCardClicked(StyleCard clickedCard);
+    void onCardClicked(StyleCard clickedCard);
     /* why using interface instead of passing the game screen into style card directly?
      yes, i can pass the game screen directly into the style card and it will
      still works the same, yet that is a bad practice since

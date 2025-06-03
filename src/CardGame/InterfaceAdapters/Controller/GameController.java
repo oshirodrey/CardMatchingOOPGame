@@ -23,14 +23,16 @@ public class GameController {
     public void onCardClicked(int row, int col) {
         if (flipCardUseCase.getGameBoard().getFlippedCardsSize() < 2) {
             //get clicked card location by access the core card entity
-            flipCardUseCase.execute(row,col);
+            flipCardUseCase.execute(row, col);
             presenter.presentFlip();
             soundPlayer.play("cardFlip");
 
             if (flipCardUseCase.getGameBoard().getFlippedCardsSize() == 2) {
 
                 Timer timer = new Timer(1000, e -> {
-                    if(!checkForMatchUseCase.isMatched()) {soundPlayer.play("cardFlip");}/*check first before
+                    if (!checkForMatchUseCase.isMatched()) {
+                        soundPlayer.play("cardFlip");
+                    }/*check first before
                     the flippedCards list is reset*/
                     checkForMatchUseCase.execute();
                     presenter.presentFlip();// Loop through styleCards to update icons

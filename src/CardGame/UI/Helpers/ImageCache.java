@@ -5,8 +5,8 @@ import CardGame.UI.CustomizedComponents.StyleCard;
 import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
 
 
 public class ImageCache {
@@ -31,6 +31,7 @@ public class ImageCache {
         }
         return cache.get(cardName);
     }
+
     public static ImageIcon loadGIFImage(String GIFName) {
         if (!cache.containsKey(GIFName)) {
             Image img = new ImageIcon(ImageCache.class.getResource("/Game/GIF/" + GIFName + ".gif"))

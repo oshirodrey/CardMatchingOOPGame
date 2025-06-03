@@ -17,10 +17,12 @@ public class ButtonBuilder {
         button.addActionListener(listener);
         return this;
     }
+
     public ButtonBuilder text(String text) {
         button.setText(text);
         return this;
     }
+
     public ButtonBuilder fontSize(float size) {
         button.setFontSize(size);
         return this;

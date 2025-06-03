@@ -13,7 +13,8 @@ public class GamePresenter {
     }
 
     public void presentFlip() {
-        ui.updateCardIcons();}
+        ui.updateCardIcons();
+    }
 
     public void presentStatus() {
         ui.updateMoveAndTime(gameBoard.getMoveCount(), gameBoard.getElapsedTime());

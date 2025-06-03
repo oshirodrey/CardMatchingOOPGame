@@ -1,10 +1,7 @@
 package CardGame;
 
-import CardGame.Domain.Entities.Score;
-import CardGame.InterfaceAdapters.Controller.GameController;
 import CardGame.UI.MainFrame;
 import CardGame.UI.TitleScreen;
-import CardGame.UI.WinScreen;
 
 import java.awt.*;
 

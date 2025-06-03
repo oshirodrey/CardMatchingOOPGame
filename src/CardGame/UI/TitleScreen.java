@@ -43,19 +43,19 @@ public class TitleScreen extends Screen {
         // Title label
         Font f = FontHelper.get("GarbataTrial-ExtraboldItalic", 60f);
         OutlinedLabel titleLine1 = new OutlinedLabel("Sakura", f,
-                new Color(217, 69, 107),new Color(255, 248, 220));
+                new Color(217, 69, 107), new Color(255, 248, 220));
         titleLine1.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         Font f1 = FontHelper.get("GarbataTrial-ExtraboldItalic", 40f);
         OutlinedLabel titleLine2 = new OutlinedLabel("Card Matching", f1,
-                new Color(217, 69, 107),new Color(255, 248, 220));
+                new Color(217, 69, 107), new Color(255, 248, 220));
         titleLine2.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JPanel titlePanel = new JPanel();
         titlePanel.setOpaque(false); // Keep background transparent
         titlePanel.setLayout(new BoxLayout(titlePanel, BoxLayout.Y_AXIS));
 
-    // Add vertical spacing manually
+        // Add vertical spacing manually
         titlePanel.add(Box.createVerticalStrut(-10)); // space above icon
         titlePanel.add(titleLine1);
         titlePanel.add(Box.createVerticalStrut(-80)); // reduce spacing between 2 titles
@@ -68,7 +68,7 @@ public class TitleScreen extends Screen {
         buttonContainer.setLayout(new BoxLayout(buttonContainer, BoxLayout.Y_AXIS));
 
         Color initColor = new Color(255, 248, 220);
-        Color hoverColor = new Color(255,200,221);
+        Color hoverColor = new Color(255, 200, 221);
 
         StyleButton startButton = ButtonFactory.createStartGameButton(this).initAndHoverColor(initColor, hoverColor).build();
         startButton.setEnabled(false);
@@ -97,6 +97,7 @@ public class TitleScreen extends Screen {
         bgmPlayer.play("CCS_BGM7");
         preloadImagesInBackground(startButton);
     }
+
     private void preloadImagesInBackground(JButton startButton) {
         SwingWorker<Void, Void> loader = new SwingWorker<>() {
             @Override

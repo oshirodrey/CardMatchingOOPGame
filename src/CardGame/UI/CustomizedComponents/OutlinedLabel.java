@@ -45,6 +45,6 @@ public class OutlinedLabel extends JComponent {
         Graphics g = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB).getGraphics();
         g.setFont(font);
         FontMetrics fm = g.getFontMetrics();
-        return new Dimension(fm.stringWidth(text) , -fm.getHeight()*3/4);
+        return new Dimension(fm.stringWidth(text), -fm.getHeight() * 3 / 4);
     }
 }

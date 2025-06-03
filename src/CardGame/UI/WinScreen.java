@@ -3,12 +3,11 @@ package CardGame.UI;
 import CardGame.Application.UseCases.SaveScoresUseCase;
 import CardGame.Domain.Entities.Score;
 import CardGame.Domain.Services.IScoreRepository;
+import CardGame.Domain.Utils.ScoreUtils;
 import CardGame.Infrastructure.Persistence.FileScoreRepository;
 import CardGame.UI.CustomizedComponents.Screen;
 import CardGame.UI.CustomizedComponents.StyleButton;
 import CardGame.UI.Helpers.ButtonFactory;
-import CardGame.Domain.Utils.ScoreUtils;
-
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,10 +15,11 @@ import java.util.Collections;
 import java.util.List;
 
 public class WinScreen extends Screen {
-    private Score score;
-    private IScoreRepository scoreRepository;
-    private SaveScoresUseCase saveScoresUseCase;
-    public WinScreen(MainFrame frame,Score score) {
+    private final Score score;
+    private final IScoreRepository scoreRepository;
+    private final SaveScoresUseCase saveScoresUseCase;
+
+    public WinScreen(MainFrame frame, Score score) {
         setParentFrame(frame);
         this.score = score;
         this.scoreRepository = new FileScoreRepository();
@@ -39,10 +39,9 @@ public class WinScreen extends Screen {
 
         JLabel iconLabel = new JLabel(winingIcon());
         JLabel winingTextLabel = winningLabel();
-        JLabel playerScoreLabel = new JLabel("Your score: Moves: "+score.getMoveCount()+" Time: "+ score.getElapsedTime());
+        JLabel playerScoreLabel = new JLabel("Your score: Moves: " + score.getMoveCount() + " Time: " + score.getElapsedTime());
 
         JLabel bestScoreLabel = bestScoreLabel();
-
 
 
         iconLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -54,16 +53,12 @@ public class WinScreen extends Screen {
         scorePanel.add(bestScoreLabel);
 
 
-
-
-
-
         //button container
         JPanel buttonContainer = new JPanel();
         buttonContainer.setLayout(new BoxLayout(buttonContainer, BoxLayout.Y_AXIS));
         buttonContainer.setBackground(customPink);
-        StyleButton leaderBoardButton = ButtonFactory.createLeaderBoardButton( this).build();
-        StyleButton backButton = ButtonFactory.createBackButton( this).build();
+        StyleButton leaderBoardButton = ButtonFactory.createLeaderBoardButton(this).build();
+        StyleButton backButton = ButtonFactory.createBackButton(this).build();
         buttonContainer.add(leaderBoardButton);
         buttonContainer.add(backButton);
 
@@ -92,14 +87,14 @@ public class WinScreen extends Screen {
         // Return true if the new score is better than the current best
         return ScoreUtils.comparator().compare(score, bestScore) < 0;
     }
-    private JLabel winningLabel(){
+
+    private JLabel winningLabel() {
         JLabel winningLabel = new JLabel();
         winningLabel.setFont(new Font("Arial", Font.BOLD, 30));
         String winning_Text;
         if (isBestScore(this.score)) {
             winning_Text = "CONGRATULATION ON YOUR NEW BEST SCORE!!!";
-        }
-        else {
+        } else {
             winning_Text = "YOU DID WELL, BETTER LUCK NEXT TIME!";
         }
         winningLabel.setText(winning_Text);
@@ -107,6 +102,7 @@ public class WinScreen extends Screen {
 
         return winningLabel;
     }
+
     private ImageIcon winingIcon() {
         String filePath;
         if (isBestScore(this.score)) {
@@ -118,13 +114,13 @@ public class WinScreen extends Screen {
         ImageIcon winingIcon = new ImageIcon(iconImg.getScaledInstance(200, 200, Image.SCALE_SMOOTH));
         return winingIcon;
     }
-    private JLabel bestScoreLabel(){
+
+    private JLabel bestScoreLabel() {
         String text;
         if (isBestScore(this.score)) {
             text = "Your score is currently the best!";
-        }
-        else {
-            text= "Current best score: Move: "+scoreRepository.loadScores().get(0).getMoveCount()+" Time: "+ scoreRepository.loadScores().get(0).getElapsedTime();
+        } else {
+            text = "Current best score: Move: " + scoreRepository.loadScores().get(0).getMoveCount() + " Time: " + scoreRepository.loadScores().get(0).getElapsedTime();
         }
         JLabel bestScoreLabel = new JLabel(text);
         bestScoreLabel.setAlignmentX(Component.CENTER_ALIGNMENT);

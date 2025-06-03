@@ -9,12 +9,13 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class StyleButton extends JButton implements MouseListener {
+    private final String text;
+    private final SFXPlayer sfxPlayer;
     private Color initColor = new Color(255, 250, 240);
     private Color hoverColor = new Color(254, 241, 230);
-    private Font initFont = FontHelper.get("FuturaAgMiteOpti-Six",30f);
-    private Font hoverFont= FontHelper.get("OPTIFuturaDemiBold",30f);
-    private String text;
-    private SFXPlayer sfxPlayer;
+    private Font initFont = FontHelper.get("FuturaAgMiteOpti-Six", 30f);
+    private Font hoverFont = FontHelper.get("OPTIFuturaDemiBold", 30f);
+
     public StyleButton(String text) {
         this.setText(text);
         this.setForeground(initColor);
@@ -23,8 +24,8 @@ public class StyleButton extends JButton implements MouseListener {
         this.setBorder(null);
         this.setContentAreaFilled(false);
         this.addMouseListener(this);
-        this.text=text;
-        sfxPlayer=new SFXPlayer();
+        this.text = text;
+        sfxPlayer = new SFXPlayer();
 
     }
 
@@ -47,7 +48,7 @@ public class StyleButton extends JButton implements MouseListener {
     public void mouseEntered(MouseEvent e) {
         this.setForeground(hoverColor);
         this.setFont(hoverFont);
-        this.setText("\u2741"+text+"\u2741");
+        this.setText("\u2741" + text + "\u2741");
     }
 
     @Override
@@ -58,14 +59,15 @@ public class StyleButton extends JButton implements MouseListener {
 
     }
 
-    public void setInitAndHoverColor(Color initColor,Color hoverColor) {
+    public void setInitAndHoverColor(Color initColor, Color hoverColor) {
         this.initColor = initColor;
         this.hoverColor = hoverColor;
         this.setForeground(initColor);
     }
+
     public void setFontSize(float size) {
-        initFont=initFont.deriveFont(size);
-        hoverFont=hoverFont.deriveFont(size);
+        initFont = initFont.deriveFont(size);
+        hoverFont = hoverFont.deriveFont(size);
         this.setFont(initFont);
     }
 

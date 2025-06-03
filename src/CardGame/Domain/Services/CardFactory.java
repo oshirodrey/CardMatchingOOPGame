@@ -1,7 +1,6 @@
 package CardGame.Domain.Services;
 
 import CardGame.Domain.Entities.Card;
-import CardGame.Domain.Entities.GameBoard;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,7 +8,7 @@ import java.util.List;
 
 public class CardFactory {
 
-    public static ArrayList<Card> createShuffledCardPairs(List<String> names, int rows , int cols) {
+    public static ArrayList<Card> createShuffledCardPairs(List<String> names, int rows, int cols) {
         ArrayList<Card> cards = new ArrayList<>();
 
         //Each pair appears ONCE
@@ -26,9 +25,9 @@ public class CardFactory {
         Collections.shuffle(cards);
 
         //Add card's location (row and col)
-        int index=0;
-        for (int r=0; r< rows;r++){
-            for (int c=0; c< cols;c++){
+        int index = 0;
+        for (int r = 0; r < rows; r++) {
+            for (int c = 0; c < cols; c++) {
                 cards.get(index).setRow(r);
                 cards.get(index).setCol(c);
                 index++;

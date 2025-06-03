@@ -4,17 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameBoard {
+    private final long startTime;
+    private final ArrayList<Card> flippedCards;
     private List<List<Card>> grid;
     private int moveCount;
-    private long startTime;
-    private ArrayList<Card> flippedCards;
 
-    public GameBoard(int rows, int cols,List<Card> cards) {
+    public GameBoard(int rows, int cols, List<Card> cards) {
         initializeGrid(rows, cols, cards);
         this.moveCount = 0;
         this.startTime = System.currentTimeMillis();
         this.flippedCards = new ArrayList<>();
     }
+
     private void initializeGrid(int rows, int cols, List<Card> cards) {
         if (cards.size() < rows * cols) {
             throw new IllegalArgumentException("Not enough cards to initialize the grid.");
@@ -29,6 +30,7 @@ public class GameBoard {
             grid.add(row);
         }
     }
+
     public void flipCard(int row, int col) {
         // Do not allow flipping more than 2 cards
         if (flippedCards.size() >= 2) return;
@@ -41,23 +43,24 @@ public class GameBoard {
         card.flip();
         flippedCards.add(card);
     }
-    public boolean checkForMatch(){
-        if(flippedCards.size() == 2){
+
+    public boolean checkForMatch() {
+        if (flippedCards.size() == 2) {
             Card c1 = flippedCards.get(0);
             Card c2 = flippedCards.get(1);
             return c1.getCardName().equals(c2.getCardName());
         }
         return false;
     }
-    public void when2CardsFlipped(){
-        if(flippedCards.size() == 2){
+
+    public void when2CardsFlipped() {
+        if (flippedCards.size() == 2) {
             Card c1 = flippedCards.get(0);
             Card c2 = flippedCards.get(1);
-            if(checkForMatch()){
+            if (checkForMatch()) {
                 c1.setMatched(true);
                 c2.setMatched(true);
-            }
-            else {
+            } else {
                 c1.flip();
                 c2.flip();//flip back
             }
@@ -66,10 +69,11 @@ public class GameBoard {
 
         }
     }
-    public boolean isAllCardsMatched(){
-        for(List<Card> cards : grid){
-            for(Card card : cards){
-                if(!card.isMatched()){
+
+    public boolean isAllCardsMatched() {
+        for (List<Card> cards : grid) {
+            for (Card card : cards) {
+                if (!card.isMatched()) {
                     return false;
                 }
             }
@@ -78,7 +82,7 @@ public class GameBoard {
     }
 
     public double getElapsedTime() {
-        return (System.currentTimeMillis() - startTime)/1000.0;
+        return (System.currentTimeMillis() - startTime) / 1000.0;
     }
 
     public Score getScoreSnapshot() {
@@ -87,11 +91,28 @@ public class GameBoard {
 
 
     //Getters and setters and helpers
-    public List<List<Card>> getGrid() {return grid;}
-    public void getCard(int row, int col) {grid.get(row).get(col);}
-    public int getMoveCount() {return moveCount;}
-    public ArrayList<Card> getFlippedCards() {return flippedCards;}
-    private void clearFlippedCards() {flippedCards.clear();}
-    public int getFlippedCardsSize() {return flippedCards.size();}
+    public List<List<Card>> getGrid() {
+        return grid;
+    }
+
+    public void getCard(int row, int col) {
+        grid.get(row).get(col);
+    }
+
+    public int getMoveCount() {
+        return moveCount;
+    }
+
+    public ArrayList<Card> getFlippedCards() {
+        return flippedCards;
+    }
+
+    private void clearFlippedCards() {
+        flippedCards.clear();
+    }
+
+    public int getFlippedCardsSize() {
+        return flippedCards.size();
+    }
 
 }

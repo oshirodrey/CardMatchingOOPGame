@@ -18,8 +18,8 @@ import java.util.List;
 
 public class LeaderBoardScreen extends Screen {
 
-    private IScoreRepository scoreRepository;
-    private LoadScoresUseCase loadScoresUseCase;
+    private final IScoreRepository scoreRepository;
+    private final LoadScoresUseCase loadScoresUseCase;
 
     public LeaderBoardScreen() {
         scoreRepository = new FileScoreRepository();
@@ -58,7 +58,7 @@ public class LeaderBoardScreen extends Screen {
         buttonContainer.setLayout(new BoxLayout(buttonContainer, BoxLayout.Y_AXIS));
         buttonContainer.setBackground(customPink);
 
-        StyleButton playButton = ButtonFactory.createCustomStartGameButton(this," Time to make history ").build();
+        StyleButton playButton = ButtonFactory.createCustomStartGameButton(this, " Time to make history ").build();
         StyleButton rulesButton = ButtonFactory.createRuleButton(this).build();
         StyleButton backButton = ButtonFactory.createBackButton(this).build();
 
@@ -73,8 +73,8 @@ public class LeaderBoardScreen extends Screen {
         bgmPlayer.play("CCS_BGM4");
 
 
-
     }
+
     private JScrollPane createScoreTable() {
         String[] columnNames = {"#", "Moves", "Time (s)"};
 

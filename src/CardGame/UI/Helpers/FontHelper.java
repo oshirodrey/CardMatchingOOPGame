@@ -1,4 +1,5 @@
 package CardGame.UI.Helpers;
+
 import java.awt.*;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -8,7 +9,7 @@ public class FontHelper {
     private static final Map<String, Font> fontCache = new HashMap<>();
 
     public static Font get(String fontName, float size) {
-        String fontPath= "/UI/Fonts/"+fontName+".ttf";
+        String fontPath = "/UI/Fonts/" + fontName + ".ttf";
         Font baseFont = fontCache.get(fontPath);
         if (baseFont == null) {
             try {

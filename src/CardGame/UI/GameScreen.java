@@ -21,68 +21,59 @@ import CardGame.UI.Sound.SFXPlayer;
 import javax.sound.sampled.LineUnavailableException;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class GameScreen extends Screen implements CardClickListener, IUIController {
-    // =================== 🧠 Game Core ===================
-    private GameBoard gameBoard;
     private final int rows = 4;
     private final int cols = 5;
-    private List<String> cardNameList = new ArrayList<>(Arrays.asList(
+    // =================== 🧠 Game Core ===================
+    private final GameBoard gameBoard;
+    private final List<String> cardNameList = new ArrayList<>(Arrays.asList(
             "a", "b", "c", "d", "e", "f", "g", "h", "i", "j"
     ));
-    private List<Card> shuffledCardDeck;
-
+    private final List<Card> shuffledCardDeck;
+    // ======================= 🧩Use Cases =======================
+    private final FlipCardUseCase flipCardUseCase;
+    private final CheckForMatchUseCase checkForMatchUseCase;
+    // ======================= 🕹️ Adapters ========================
+    private final GameController controller;
+    private final GamePresenter presenter;
     // =================== 🎴 UI Components ===================
     private List<StyleCard> displayCardDeck;
     private JLabel moveCountLabel;
     private JLabel timePassedLabel;
-
-
     // =================== ⏱ Game Flow Utilities ===================
     private Timer gameTimer;
 
-    // ======================= 🧩Use Cases =======================
-    private FlipCardUseCase flipCardUseCase;
-    private CheckForMatchUseCase checkForMatchUseCase;
-
-    // ======================= 🕹️ Adapters ========================
-    private GameController controller;
-    private GamePresenter presenter;
-
     public GameScreen() {
-      shuffledCardDeck = CardFactory.createShuffledCardPairs(cardNameList,rows,cols);
-      gameBoard = new GameBoard(rows,cols, shuffledCardDeck);
+        shuffledCardDeck = CardFactory.createShuffledCardPairs(cardNameList, rows, cols);
+        gameBoard = new GameBoard(rows, cols, shuffledCardDeck);
 
 
         try {
-            bgmPlayer= new BGMPlayer();
-            sfxPlayer= new SFXPlayer();
+            bgmPlayer = new BGMPlayer();
+            sfxPlayer = new SFXPlayer();
         } catch (LineUnavailableException e) {
             throw new RuntimeException(e);
         }
 
         presenter = new GamePresenter(gameBoard, this);
-      flipCardUseCase = new FlipCardUseCase(gameBoard);
-      checkForMatchUseCase = new CheckForMatchUseCase(gameBoard);
-      controller = new GameController(flipCardUseCase, checkForMatchUseCase, presenter,sfxPlayer);
+        flipCardUseCase = new FlipCardUseCase(gameBoard);
+        checkForMatchUseCase = new CheckForMatchUseCase(gameBoard);
+        controller = new GameController(flipCardUseCase, checkForMatchUseCase, presenter, sfxPlayer);
 
     }
 
     public ArrayList<StyleCard> displayCards() {
         ArrayList<StyleCard> cards = new ArrayList<>();
-      for (Card card : shuffledCardDeck) {
-          StyleCard styleCard = new StyleCard(card,this);
-          cards.add(styleCard);
-      }
-      return cards;
+        for (Card card : shuffledCardDeck) {
+            StyleCard styleCard = new StyleCard(card, this);
+            cards.add(styleCard);
+        }
+        return cards;
     }
-
-
 
 
     @Override
@@ -162,8 +153,9 @@ public class GameScreen extends Screen implements CardClickListener, IUIControll
 
     @Override
     public void onCardClicked(StyleCard clickedCard) {
-       controller.onCardClicked(clickedCard.getCardEntity().getRow(), clickedCard.getCardEntity().getCol());
+        controller.onCardClicked(clickedCard.getCardEntity().getRow(), clickedCard.getCardEntity().getCol());
     }
+
     @Override
     public void updateCardIcons() {
         for (StyleCard sc : this.displayCardDeck) {

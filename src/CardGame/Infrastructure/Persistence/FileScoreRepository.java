@@ -1,30 +1,23 @@
 package CardGame.Infrastructure.Persistence;
 
 import CardGame.Domain.Entities.Score;
+import CardGame.Domain.Services.IScoreRepository;
 
 import java.io.*;
-import java.util.*;
-import CardGame.Domain.Services.IScoreRepository;
+import java.util.ArrayList;
 import java.util.List;
 
 public class FileScoreRepository implements IScoreRepository {
-    private final File file =  new File("./src/CardGame/Infrastructure/Persistence/ScoreData.txt");
+    private final File file = new File("./src/CardGame/Infrastructure/Persistence/ScoreData.txt");
 //    public FileScoreRepository(String filepath) {
 //        this.file = new File(filepath);
-////        try {
-////            file.createNewFile(); // creates if it doesn’t exist
-////        } catch (IOException e) {
-////            throw new RuntimeException("Failed to create score file", e);
-////        }
-//    }
 
-    @Override
-    public void saveScore(Score score) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
-            writer.write(score.toString());
-            writer.newLine();
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to save score", e);
+    public static void main(String[] args) {
+        File file = new File("/src/CardGame/Infrastructure/Persistence/ScoreData.txt");
+        if (!file.exists()) {
+            System.out.println("File not found at: " + file.getAbsolutePath());
+        } else {
+            System.out.println("File found: " + file.getAbsolutePath());
         }
     }
 
@@ -41,6 +34,7 @@ public class FileScoreRepository implements IScoreRepository {
         }
         return scores;
     }
+
     @Override
     public void saveAll(List<Score> scores) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
@@ -50,15 +44,6 @@ public class FileScoreRepository implements IScoreRepository {
             }
         } catch (IOException e) {
             throw new RuntimeException("Failed to overwrite scores", e);
-        }
-    }
-
-    public static void main(String[] args) {
-        File file =  new File("./src/CardGame/Infrastructure/Persistence/ScoreData.txt");
-        if (!file.exists()) {
-            System.out.println("File not found at: " + file.getAbsolutePath());
-        } else {
-            System.out.println("File found: " + file.getAbsolutePath());
         }
     }
 }

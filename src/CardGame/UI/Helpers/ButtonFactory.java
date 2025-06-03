@@ -17,7 +17,7 @@ public class ButtonFactory {
                 .onClick(e -> screen.getParentFrame().replaceCurrentScreenWith(new GameScreen()));
     }
 
-    public static ButtonBuilder createCustomStartGameButton(Screen screen,String text) {
+    public static ButtonBuilder createCustomStartGameButton(Screen screen, String text) {
         return new ButtonBuilder(text)
                 .onClick(e -> screen.getParentFrame().replaceCurrentScreenWith(new GameScreen()));
     }

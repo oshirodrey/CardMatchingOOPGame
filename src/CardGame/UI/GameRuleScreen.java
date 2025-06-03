@@ -10,7 +10,6 @@ import CardGame.UI.Sound.BGMPlayer;
 import javax.sound.sampled.LineUnavailableException;
 import javax.swing.*;
 import java.awt.*;
-import java.text.AttributedString;
 
 public class GameRuleScreen extends Screen {
     public GameRuleScreen(MainFrame parentFrame) {
@@ -44,16 +43,16 @@ public class GameRuleScreen extends Screen {
         ruleTextArea.setWrapStyleWord(true);
 
         ruleTextArea.setText("""
-         Welcome to the Memory Card Game!
-
-         How to Play:
-         1. Click a card to flip it and reveal its symbol.
-         2. Match all the pairs using as few moves as possible.
-
-         Leaderboard Rules:
-         1. The run with fewer moves ranks higher.
-         2. If move counts are the same, the faster time gets the higher rank.
-        """);
+                 Welcome to the Memory Card Game!
+                
+                 How to Play:
+                 1. Click a card to flip it and reveal its symbol.
+                 2. Match all the pairs using as few moves as possible.
+                
+                 Leaderboard Rules:
+                 1. The run with fewer moves ranks higher.
+                 2. If move counts are the same, the faster time gets the higher rank.
+                """);
 
         // === Buttons ===
         JPanel buttonContainer = new JPanel();
@@ -65,8 +64,6 @@ public class GameRuleScreen extends Screen {
         StyleButton backButton = ButtonFactory.createBackButton(this).build();
 
 
-
-
         buttonContainer.add(startButton);
         buttonContainer.add(backButton);
 
@@ -75,7 +72,6 @@ public class GameRuleScreen extends Screen {
         this.add(dancingLabel, BorderLayout.EAST);
 
         bgmPlayer.play("CCS_BGM6");
-
 
 
     }

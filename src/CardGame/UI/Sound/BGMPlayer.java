@@ -8,35 +8,39 @@ import java.io.InputStream;
 import java.util.Random;
 
 public class BGMPlayer implements ISoundPlayer {
+    private final Random rand;
     private String songName;
     private File songFile;
     private AudioInputStream audioInputStream;
     private Clip clip;
-    private Random rand ;
     private boolean muted = false;
+
     public BGMPlayer() throws LineUnavailableException {
         rand = new Random();
         rand.setSeed(System.currentTimeMillis());
     }
+
     public void playRandom(String soundID) {
-        if(muted) return;
+        if (muted) return;
         stop();
 
-        int index = rand.nextInt(6)+1;
-        songName = soundID+ index;
+        int index = rand.nextInt(6) + 1;
+        songName = soundID + index;
         play(songName);
     }
+
     private void setVolume(Clip clip, float dB) {
         if (clip.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
             FloatControl gain = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
             gain.setValue(dB);
         }
     }
+
     @Override
     public void play(String soundID) {
         stop();
 
-        String path = "/Sound/BGM/"+soundID+".wav";
+        String path = "/Sound/BGM/" + soundID + ".wav";
         try {
             InputStream is = getClass().getResourceAsStream(path);
             AudioInputStream audioStream = AudioSystem.getAudioInputStream(is);
@@ -52,7 +56,7 @@ public class BGMPlayer implements ISoundPlayer {
 
     @Override
     public void stop() {
-        if(clip != null && clip.isRunning()){
+        if (clip != null && clip.isRunning()) {
             clip.stop();
             clip.close();
         }
@@ -63,7 +67,8 @@ public class BGMPlayer implements ISoundPlayer {
     public void setMuted(boolean mute) {
         this.muted = mute;
         if (clip != null) {
-            if (mute) clip.stop(); else clip.start();
+            if (mute) clip.stop();
+            else clip.start();
         }
     }
 }
