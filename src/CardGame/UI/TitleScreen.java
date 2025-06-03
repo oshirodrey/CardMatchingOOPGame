@@ -31,7 +31,7 @@ public class TitleScreen extends Screen {
         this.getParentFrame().setSize(800, 600);
 
         // GIF background
-        ImageIcon background = ImageCache.loadGIFImage("sakuraBG3");
+        ImageIcon background = ImageCache.loadGIFImage("sakuraBG1");
         JLabel backgroundLabel = new JLabel(background);
         backgroundLabel.setBounds(0, 0, background.getIconWidth(), background.getIconHeight());
 

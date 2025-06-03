@@ -90,7 +90,7 @@ public class GameScreen extends Screen implements CardClickListener, IUIControll
         this.getParentFrame().setSize(new Dimension(1000, 800));
 
         // === GIF Background ===
-        ImageIcon background = ImageCache.loadGIFImage("sakuraBG4");
+        ImageIcon background = ImageCache.loadGIFImage("sakuraBG2");
         JLabel backgroundLabel = new JLabel(background);
         backgroundLabel.setBounds(0, 0, background.getIconWidth(), background.getIconHeight());
 

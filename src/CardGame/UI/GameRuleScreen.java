@@ -4,6 +4,7 @@ import CardGame.UI.CustomizedComponents.Screen;
 import CardGame.UI.CustomizedComponents.StyleButton;
 import CardGame.UI.Helpers.ButtonFactory;
 import CardGame.UI.Helpers.FontHelper;
+import CardGame.UI.Helpers.ImageCache;
 import CardGame.UI.Sound.BGMPlayer;
 
 import javax.sound.sampled.LineUnavailableException;
@@ -26,6 +27,11 @@ public class GameRuleScreen extends Screen {
         this.setLayout(new BorderLayout());
         this.setBackground(customPink);
 
+        // === The Funny .GIF That I Don't Want To Let Go ===
+        ImageIcon dancingImg = ImageCache.loadGIFImage("funni");
+        JLabel dancingLabel = new JLabel(dancingImg);
+
+        // === Rule Paragraph ===
         JTextArea ruleTextArea = new JTextArea();
         ruleTextArea.setForeground(Color.WHITE);
         ruleTextArea.setBackground(customPink);
@@ -49,7 +55,7 @@ public class GameRuleScreen extends Screen {
          2. If move counts are the same, the faster time gets the higher rank.
         """);
 
-
+        // === Buttons ===
         JPanel buttonContainer = new JPanel();
         buttonContainer.setOpaque(false);
         buttonContainer.setBackground(customPink);
@@ -66,6 +72,7 @@ public class GameRuleScreen extends Screen {
 
         this.add(ruleTextArea, BorderLayout.CENTER);
         this.add(buttonContainer, BorderLayout.SOUTH);
+        this.add(dancingLabel, BorderLayout.EAST);
 
         bgmPlayer.play("CCS_BGM6");
 
