@@ -64,14 +64,15 @@
 # Play & Build Instructions
 
 > Prerequisites:
-> - JDK 17+
-> - Java-compatible IDE (IntelliJ, Eclipse, etc.)
+> - JDK 23+
+> - Make sure you didn't change anything in the game folder
 
-1. Clone the repository.
-2. Make sure resources in `/src/resources` (Cards, Game, Sound, Fonts) are in place.
-3. Run the `Main` class inside `CardGame.Main`.
+- There are uhm...3 ways to run the game:
+1. Through Main.java(won't be there in the release)
+2. Through the .exe file (Recommended)
+3. Through .jar file (I used openJDK 23) (God this is so painful to figure out the way TvT)
 
-> Tip: For best experience, don't move the title screen down.
+> Tip: For best experience, don't move the title screen down! (The move counter and timer will be left out of the screen)
 
 ---
 

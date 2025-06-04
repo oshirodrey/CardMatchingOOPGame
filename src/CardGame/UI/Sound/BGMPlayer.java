@@ -4,6 +4,7 @@ import CardGame.InterfaceAdapters.ISoundPlayer;
 
 import javax.sound.sampled.*;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Random;
 
@@ -40,17 +41,19 @@ public class BGMPlayer implements ISoundPlayer {
     public void play(String soundID) {
         stop();
 
-        String path = "/Sound/BGM/" + soundID + ".wav";
+
+
         try {
-            InputStream is = getClass().getResourceAsStream(path);
-            AudioInputStream audioStream = AudioSystem.getAudioInputStream(is);
+            String path = "/res/Sound/BGM/" + soundID + ".wav";
+            File soundFile = getSoundFile(path);
+            audioInputStream = AudioSystem.getAudioInputStream(soundFile);
             clip = AudioSystem.getClip();
-            clip.open(audioStream);
+            clip.open(audioInputStream);
             setVolume(clip, -10.0f);//smaller than SFX
             clip.loop(Clip.LOOP_CONTINUOUSLY);
             if (!muted) clip.start();
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException("Unable to locate JAR directory", e);
         }
     }
 
@@ -69,6 +72,30 @@ public class BGMPlayer implements ISoundPlayer {
         if (clip != null) {
             if (mute) clip.stop();
             else clip.start();
+        }
+    }
+    private File getSoundFile(String relativePath) {
+        try {
+            // Where the class is loaded from — either .class dir or .jar
+            File baseDir = new File(SFXPlayer.class.getProtectionDomain()
+                    .getCodeSource().getLocation().toURI()).getParentFile();
+
+            File candidate = new File(baseDir, relativePath);
+            if (candidate.exists()) {
+                return candidate;
+            }
+
+            // Fallback: look relative to working directory (for IntelliJ)
+            String workingDir = System.getProperty("user.dir");
+            File fallback = new File(workingDir,relativePath);
+            if (fallback.exists()) {
+                return fallback;
+            }
+
+            throw new FileNotFoundException("Sound file not found in either JAR dir or working dir: " + relativePath);
+
+        } catch (Exception e) {
+            throw new RuntimeException("Could not resolve sound path", e);
         }
     }
 }

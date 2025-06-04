@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="CardMatchingOOPGame:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/CardMatchingOOPGame_jar</output-path>
+    <root id="archive" name="CardMatchingOOPGame.jar">
+      <element id="module-output" name="CardMatchingOOPGame" />
+    </root>
+  </artifact>
+</component>
