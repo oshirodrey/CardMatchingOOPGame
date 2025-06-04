@@ -1,5 +1,8 @@
 package CardGame.Domain.Entities;
 
+/**
+ * Represents
+ */
 public class Score {
     private final int moveCount;
     private final double elapsedTime;

@@ -24,7 +24,11 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
+/**
+ * Represents the main gameplay screen.
+ * Renders the card grid, handles user clicks via CardClickListener,
+ * and updates the UI based on game state.
+ */
 public class GameScreen extends Screen implements CardClickListener, IUIController {
     private final int rows = 4;
     private final int cols = 5;
@@ -47,6 +51,9 @@ public class GameScreen extends Screen implements CardClickListener, IUIControll
     // =================== ⏱ Game Flow Utilities ===================
     private Timer gameTimer;
 
+    /**
+     * Initializes the game logic, shuffled cards, and necessary layers.
+     */
     public GameScreen() {
         shuffledCardDeck = CardFactory.createShuffledCardPairs(cardNameList, rows, cols);
         gameBoard = new GameBoard(rows, cols, shuffledCardDeck);
@@ -74,7 +81,6 @@ public class GameScreen extends Screen implements CardClickListener, IUIControll
         }
         return cards;
     }
-
 
     @Override
     public void init() {
@@ -151,11 +157,19 @@ public class GameScreen extends Screen implements CardClickListener, IUIControll
         bgmPlayer.playRandom("CCS_BGM");
     }
 
+    /**
+     * Handles a card click via callback from StyleCard.
+     *
+     * @param clickedCard the StyleCard clicked by user
+     */
     @Override
     public void onCardClicked(StyleCard clickedCard) {
         controller.onCardClicked(clickedCard.getCardEntity().getRow(), clickedCard.getCardEntity().getCol());
     }
 
+    /**
+     * Updates the visual state of all cards.
+     */
     @Override
     public void updateCardIcons() {
         for (StyleCard sc : this.displayCardDeck) {
@@ -163,12 +177,23 @@ public class GameScreen extends Screen implements CardClickListener, IUIControll
         }
     }
 
+    /**
+     * Updates the move counter and timer label.
+     *
+     * @param moveCount number of moves made
+     * @param time      time in seconds
+     */
     @Override
     public void updateMoveAndTime(int moveCount, double time) {
         moveCountLabel.setText("Move: " + moveCount);
         timePassedLabel.setText("     Time Passed: " + time + " seconds");
     }
 
+    /**
+     * Transitions to the win screen.
+     *
+     * @param score the final game score
+     */
     @Override
     public void showWinScreen(Score score) {
         SwingUtilities.invokeLater(() -> {

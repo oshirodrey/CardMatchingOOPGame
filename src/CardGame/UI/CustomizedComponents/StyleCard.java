@@ -7,7 +7,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-
+/**
+ * A custom JButton representing a card in the UI.
+ * Handles mouse interaction and displays appropriate images for
+ * card face/back based on the card state.
+ */
 public class StyleCard extends JButton implements MouseListener {
     //Card size
     private static final int scale = 8;
@@ -21,7 +25,12 @@ public class StyleCard extends JButton implements MouseListener {
     private final ImageIcon cardFont;
     private ImageIcon currentIcon;
 
-
+    /**
+     * Constructs a new styled card with its logical model and a click callback.
+     *
+     * @param card the logical Card entity
+     * @param cardClickListener callback to handle click events
+     */
     public StyleCard(Card card, CardClickListener cardClickListener) {
         this.card = card;
         this.cardClickListener = cardClickListener;
@@ -84,6 +93,9 @@ public class StyleCard extends JButton implements MouseListener {
         }
     }
 
+    /**
+     * Updates the card's icon based on whether it's face up.
+     */
     public void updateCardIcons() {
 
         if (card.isFaceUp()) {
@@ -98,6 +110,11 @@ public class StyleCard extends JButton implements MouseListener {
         this.setIcon(cardFont);
     }
 
+    /**
+     * Returns the underlying Card entity in domain layer.
+     *
+     * @return the associated Card
+     */
     public Card getCardEntity() {
         return card;
     }

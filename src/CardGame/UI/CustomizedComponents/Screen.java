@@ -29,6 +29,9 @@ public abstract class Screen extends JPanel {
         this.parentFrame = parentFrame;
     }
 
+    /**
+     * Initializes the screen layout.
+     */
     public abstract void init();
 
     public void onExit() {
