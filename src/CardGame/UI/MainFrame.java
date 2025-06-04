@@ -18,6 +18,8 @@ public class MainFrame extends JFrame {
 
     public MainFrame(Dimension dimension) {
         this.setSize(dimension);
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(screenSize.width/6, 0);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setResizable(false);
         this.centered = false;
